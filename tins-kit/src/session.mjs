@@ -180,6 +180,7 @@ export function close(root, opts = {}) {
   if (!f.gate.ok) reasons.push('gate failed (output above)');
   if (!f.commits.length) reasons.push('nothing to record: no commits and no changes since session start');
   if (f.secrets.length) reasons.push(`a secret is in this session's history. Before it leaves this machine: git reset --soft ${s.base.slice(0, 12)}, remove it from the files, then run close again`);
+  if (!f.commits.length) { unlinkSync(stateFile(root)); reasons.push('session discarded (it recorded nothing)'); return { ok: false, reasons, session: s, facts: f }; }
   const handover = opts.handover && !f.secrets.length && f.commits.length;
   if (reasons.length && !handover) return { ok: false, reasons, session: s, facts: f };
 

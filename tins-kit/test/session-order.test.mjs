@@ -64,8 +64,8 @@ test('start twice resumes; close twice is harmless', () => {
     write(d, 'src/c.mjs', 'export const c = 1;\n');
     assert.equal(kit(d, 'close').code, 0);
     const second = kit(d, 'close');
-    assert.equal(second.code, 1); assert.match(second.out, /nothing to record/);
-    kit(d, 'abort');
+    assert.equal(second.code, 1); assert.match(second.out, /nothing to record/); assert.match(second.out, /discarded/);
+    assert.match(kit(d, 'status').out, /no open session/, 'an empty session is not left open as a trap');
   } finally { rm(d); }
 });
 

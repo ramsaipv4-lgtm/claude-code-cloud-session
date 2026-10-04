@@ -1,0 +1,2 @@
+{ "type": "library", "paths": ["SPEC.md", "src", "test", "lib"],
+  "prompt": "Add `invoiceTotal(lines)` to src/index.mjs. Each line is `{ price: '19.99', qty: '1.25' }` (strings; price has 2 decimals, qty up to 3 decimals). Round each line to the nearest paisa (ties to even), sum the lines, and return the total as a string with exactly 2 decimals, e.g. '24.99'." }

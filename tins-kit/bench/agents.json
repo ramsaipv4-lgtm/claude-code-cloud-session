@@ -1,0 +1,12 @@
+{
+  "_doc": "Command templates. {PROMPT} {TASK_DIR} {BENCH} {KIT} are substituted. mode relay: the packet arrives on stdin, the reply is read from stdout. Add your own agent (codex exec, gemini -p, aider --message, opencode run ...) as another entry.",
+  "null": { "mode": "agentic", "cmd": ["node", "-e", ""] },
+  "oracle": { "mode": "agentic", "cmd": ["node", "{TASK_DIR}/solution.mjs"] },
+  "oracle-relay": { "mode": "relay", "cmd": ["node", "{BENCH}/oracle-relay.mjs", "{TASK_DIR}"] },
+  "haiku": { "mode": "agentic", "model": "claude-haiku-4-5-20251001", "timeout_s": 600,
+    "cmd": ["claude", "-p", "{PROMPT}", "--model", "claude-haiku-4-5-20251001", "--permission-mode", "bypassPermissions", "--output-format", "json", "--setting-sources", "", "--no-session-persistence"] },
+  "sonnet": { "mode": "agentic", "model": "claude-sonnet-5-5", "timeout_s": 900,
+    "cmd": ["claude", "-p", "{PROMPT}", "--model", "claude-sonnet-5-5", "--permission-mode", "bypassPermissions", "--output-format", "json", "--setting-sources", "", "--no-session-persistence"] },
+  "haiku-relay": { "mode": "relay", "model": "claude-haiku-4-5-20251001", "timeout_s": 300,
+    "cmd": ["claude", "-p", "--model", "claude-haiku-4-5-20251001", "--tools", "", "--output-format", "json", "--setting-sources", "", "--no-session-persistence"] }
+}

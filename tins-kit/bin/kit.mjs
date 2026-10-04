@@ -39,7 +39,7 @@ function die(msg, code = 1) { process.stderr.write(`kit: ${msg}\n`); process.exi
 function report(r) {
   if (r.record) process.stdout.write(`kit: ${r.handover ? 'HANDOVER (not mergeable)' : 'closed'} session ${r.session.id} -> ${r.record}\n`);
   for (const x of r.reasons || []) process.stdout.write(`  - ${x}\n`);
-  if (!r.ok) process.stdout.write(r.record ? '' : `kit: session ${r.session?.id} stays OPEN; fix the above and run close again\n`);
+  if (!r.ok && !r.record && !(r.reasons || []).some((x) => x.includes('discarded'))) process.stdout.write(`kit: session ${r.session?.id} stays OPEN; fix the above and run close again\n`);
   process.exit(r.ok ? 0 : 1);
 }
 

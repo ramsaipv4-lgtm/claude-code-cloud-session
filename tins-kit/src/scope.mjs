@@ -5,9 +5,12 @@ const norm = (p) => p.replace(/\\/g, '/').replace(/^\.\//, '').replace(/\/+$/, '
 const under = (p, prefix) => prefix === '' || prefix === '.' || p === prefix || p.startsWith(prefix + '/');
 
 /** allowed: null (= whole repo minus protected) or list of path prefixes. Returns violating paths. */
+/** Written by kit commands themselves (`kit pattern add`); never counts against a task's scope (RF-9). */
+export const KIT_MANAGED = ['.tins/patterns.lock'];
+
 export function violations(paths, allowed) {
   const allow = allowed && allowed.length ? allowed.map(norm) : null;
-  return paths.map(norm).filter((p) => {
+  return paths.map(norm).filter((p) => !KIT_MANAGED.includes(p)).filter((p) => {
     const explicitly = allow && allow.some((a) => a !== '' && a !== '.' && under(p, a));
     if (PROTECTED.some((x) => under(p, x))) return !explicitly; // protected needs an explicit grant
     return allow ? !allow.some((a) => under(p, a)) : false;

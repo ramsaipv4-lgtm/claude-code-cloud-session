@@ -1,0 +1,2 @@
+{ "type": "cli", "paths": ["SPEC.md", "src", "test"],
+  "prompt": "Add a greeting: `node src/cli.mjs NAME` prints `Hello, NAME!`; with `--shout` (e.g. `node src/cli.mjs --shout NAME`) it prints the same greeting in upper case. Keep `--help` and the unknown-option behaviour working." }

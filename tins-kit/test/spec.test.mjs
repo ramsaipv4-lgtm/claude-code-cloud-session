@@ -32,6 +32,7 @@ test('scope rules', () => {
   assert.deepEqual(violations(['srcx/a.js'], ['src']), ['srcx/a.js'], 'prefix must be a path segment');
   assert.deepEqual(violations(['tins.json', '.tins/kit/x', 'sessions/a.md', 'tasks/t.md', 'a', '.tins/patterns.lock'], null), ['tins.json', '.tins/kit/x', 'sessions/a.md', 'tasks/t.md']);
   assert.deepEqual(violations(['tins.json'], ['tins.json']), [], 'explicit grant');
+  assert.deepEqual(violations(['.tins/patterns.lock', 'src/a.js'], ['src']), [], 'kit-managed pin file never counts against scope (RF-9)');
   assert.deepEqual(violations(['src\\win.js'], ['src']), [], 'backslashes normalised');
   assert.ok(overlaps(['src/a'], ['src'])); assert.ok(!overlaps(['src/a'], ['src/b'])); assert.ok(overlaps(null, ['x']));
   for (const bad of ['../x', '/etc/passwd', 'C:/x', 'a/../../b', '', 'a//b']) assert.ok(!safeRelative(bad), bad);
