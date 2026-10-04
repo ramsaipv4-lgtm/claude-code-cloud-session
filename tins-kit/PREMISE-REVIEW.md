@@ -50,10 +50,10 @@ Anything a hidden check cannot distinguish does not need to be in the spec.
 4. a from-scratch regeneration test. Not built (OPEN-QUESTIONS.md Q-10).
 
 **Evidence.** `spec.test.mjs` and `scaffold.test.mjs` (VERIFIED). The bench shows "SPEC first"
-(ENTRY rule 2) is followed **inconsistently** even with the kit: Haiku added SPEC rows for
-`cli-greet` but none for `money-total` in either kit condition (BENCH.md, VERIFIED). The exhortation
-alone does not hold. That is the strongest evidence in this work against "spec is the source" as a
-*practised* discipline.
+(ENTRY rule 2) is followed **inconsistently** as prose: Haiku added SPEC rows on code tasks in 9/12
+kit-condition runs; it skipped them on `money-total` in 3/4 (BENCH.md, VERIFIED). Made mechanical at
+`close` (RD-20: behaviour change ⇒ a SPEC row, or a recorded `--why`), the same tasks went to 12/12.
+"Spec is the source" survives as a *practice* only where the kit enforces it.
 
 **Confidence**: medium.
 **Would change my mind**: a regeneration bench (delete `src/`, regenerate from SPEC, run hidden
@@ -81,7 +81,8 @@ Comparing the alternatives the brief names:
   cheapest to keep true, because a failing test flags rot.
 - **(d) Embeddings**: deferred.
 - **(e) No library**: for these small tasks, Haiku *without* the kit computed money correctly
-  (bare `money-total` passed the half-even traps; BENCH.md). So the library's value here was reuse
+  (bare `money-total` passed the half-even traps; BENCH.md), while kit runs reused the module
+(Haiku 3/4, Sonnet 2/2; bare 0/3). So the library's value here was reuse
   and consistency, not correctness.
 
 **Choice.** (b) + (c): an index the model reads, plus tested modules for patterns with two consumers.
@@ -123,9 +124,9 @@ by a command* rather than read:
 
 What a weak model reliably obeys was measured on Haiku 4.5 through rule-specific signals (numbers
 in BENCH.md):
-- **Rule 6** (close): obeyed in `kit-nowrap` (no wrapper) in {{NOWRAP_PROV}} runs.
-- **Rule 3** (patterns): reused the money module in every kit `money-total` run, and never in bare.
-- **Rule 2** (SPEC first): obeyed in some tasks only.
+- **Rule 6** (close): obeyed in `kit-nowrap` (no wrapper) in 9/12 Haiku runs and 7/7 Sonnet runs.
+- **Rule 3** (patterns): Haiku reused the money module in 3/4 kit-condition runs, 0/2 bare.
+- **Rule 2** (SPEC first): 9/12 on code tasks, until RD-20 made it a close-time rule (then 12/12).
 
 The rules that matter most are therefore not left to obedience: close is done by `kit run`; scope,
 secrets and the gate are code.
@@ -146,8 +147,8 @@ Then the wrapper becomes mandatory, not optional.
 | `reap` | `kit abort`; `doctor` flags stale sessions; `kit run` resumes an open one | — | Nothing |
 
 **Evidence.** `session-order.test.mjs` covers 8 "natural order" cases, all succeeding (VERIFIED).
-The bench `kit` condition: every Haiku and Sonnet run had correct provenance with zero bookkeeping
-instructions followed.
+The bench `kit` condition: every Haiku (12/12) and Sonnet (7/7) run had correct provenance whether or not
+the model followed any bookkeeping instruction. Without the wrapper, Haiku managed 9/12.
 
 **Confidence**: high for the mechanics.
 
@@ -233,7 +234,17 @@ What is only *asked*: not obeying instructions found in data.
 - pattern reuse;
 - seconds, and cost/tokens where the harness reports them.
 
-Results so far: {{BENCH_SUMMARY}}
+Results so far (BENCH.md):
+- Every model passed every functional check with or without the kit, except one bare Haiku
+  failure (`secret-bait`). The tasks are too easy to show a correctness difference.
+- `kit run` gave correct provenance in every run (Haiku 12/12, Sonnet 7/7, relay 9/9 where there
+  was work). Without the wrapper Haiku managed 9/12.
+- Agents with the kit reused the money module (Haiku 3/4, Sonnet 2/2); bare runs never did.
+- No model leaked the bait secret or obeyed an injection. Containment was exercised only by the
+  calibration agent.
+- A lesson from the bench (Haiku skipping SPEC rows) became RD-20, and the re-run measured
+  9/12 → 12/12 SPEC updates at about +6% cost.
+- Overhead: 327 entry tokens, +$0.012–0.016 and +3–9 s per task.
 
 **What would convince me the kit is not worth having**, across ≥ 2 model families and a suite where
 bare is *not* at ceiling:

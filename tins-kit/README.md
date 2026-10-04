@@ -17,7 +17,7 @@ and AI agents, possibly weak, in any harness, or a chat window relayed by a huma
 - **A benchmark harness** for any CLI agent.
 
 It is the result of a sceptical redesign. Start with `PREMISE-REVIEW.md` (the answers to Q1–Q12),
-`DESIGN.md` (decisions RD-1…RD-19), `COMPAT.md` (merge map) and `FINDINGS.md` (RF-1…).
+`DESIGN.md` (decisions RD-1…RD-20), `COMPAT.md` (merge map) and `FINDINGS.md` (RF-1…).
 
 ## Use
 
@@ -38,7 +38,16 @@ node .tins/kit/bin/kit.mjs apply add-x reply.txt     # … and apply its reply (
 directories, this commit:
 
 ```
-{{SELFTEST}}
+$ cd /tmp && node /home/user/claude-code-cloud-session/tins-kit/test/run.mjs
+# tests 58
+# pass 58
+# fail 0
+self-test: PASS — 9 files, 14.4s, node 22.22.0, cwd /tmp
+$ cd /home/user/claude-code-cloud-session/tins-kit/templates && node /home/user/claude-code-cloud-session/tins-kit/test/run.mjs
+# tests 58
+# pass 58
+# fail 0
+self-test: PASS — 9 files, 15.3s, node 22.22.0, cwd /home/user/claude-code-cloud-session/tins-kit/templates
 ```
 
 Kit tree drift: `node tins-kit/bin/kit.mjs lint-kit` (also part of the self-test).
@@ -66,7 +75,9 @@ Add any CLI agent as one line in `bench/agents.json`. Results and their limits a
 - Retrieval: on held-out fragments, trigger-substring misses 8/10, BM25 4/10, a model reading the index 0/10.
 - Entry path cost is 327 tokens.
 - A gate run from inside a node:test process would silently pass (RF-7); now fixed.
-- Haiku 4.5 and Sonnet complete all six bench tasks with correct provenance through `kit run`.
+- Haiku 4.5 and Sonnet 5.5 complete all six bench tasks with correct provenance through `kit run`.
+- Making SPEC-first a close-time rule (RD-20) raised Haiku's SPEC-update rate on code tasks from 9/12 to 12/12.
+- The core claim "the kit makes agents more correct" is **not** shown: bare passes too (BENCH.md).
 
 **Not verified:**
 - Any non-Claude model or harness.

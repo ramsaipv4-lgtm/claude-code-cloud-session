@@ -59,7 +59,7 @@ to the incumbent's code, so incumbent formats are as described in the brief (ASS
 | `kit-listing` | replaced by `kit patterns` | — | — |
 | `kit-new-pattern` | dropped | A pattern is a folder. `lint-kit` validates it | — |
 | `kit-ingest`, `kit-proposal-check` | replaced by candidate/proven rules + expiry + hash pins (RD-19) | — | — |
-| self-test | kept with change | `node test/run.mjs`: 9 files, 55 tests, about 14 s on 4 cores, any cwd, no network | — |
+| self-test | kept with change | `node test/run.mjs`: 9 files, 58 tests, about 15 s on 4 cores, any cwd, no network | — |
 | `--kit` validation mode | replaced by `kit lint-kit` | Drift, budgets, pattern rules, secret-free tree, doc-ID format | — |
 
 ## Standing rules
