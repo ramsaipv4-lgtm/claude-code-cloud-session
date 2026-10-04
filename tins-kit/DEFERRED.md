@@ -1,0 +1,20 @@
+# DEFERRED — not built, and what evidence would justify building each
+
+| ID | Idea | Why not now | Evidence that would justify it |
+|---|---|---|---|
+| D-1 | Embedding-based retrieval | Needs a dependency or network (brief rule 6). At 11 patterns, a model reading the 577-token index scored 0/14 misses (RF-5) | A library large enough that the index exceeds about 3k tokens, **and** a held-out miss rate for "model reads index" above about 10% |
+| D-2 | Per-reference dispositions (accepted / rejected / adapted per retrieved pattern) | No second consumer (brief 2.3). `.tins/patterns.lock` already records what was adopted | Two projects asking "why was pattern X not used here?" during review |
+| D-3 | Tiered escalation (worker fails → stronger model → human) | No observed failure that escalation would fix. `kit merge` refusals already route to a human | Bench runs where a weaker tier fails a task a stronger tier passes, at a cost where automatic retry beats human triage |
+| D-4 | Role prompts (spec author, reviewer, maintainer, kitting) | Each adds entry-path tokens. No measured effect | A bench condition "ENTRY + role prompt" beating "ENTRY only" on the same tasks across ≥ 2 model tiers |
+| D-5 | Map-then-reduce reconciliation of parallel work | One reconciler that merges serially and gates each merge worked in tests (RD-12) | More than about 5 parallel tasks per day where serial merge-and-gate becomes the bottleneck |
+| D-6 | `index` (generated sessions index) | `ls sessions/` and `git log --grep 'tins: close'` answer the same question | A maintainer needing cross-session queries (cost per task, gate failures per week) often enough to script them |
+| D-7 | Docs guardian | No failure evidence in the brief | A recorded incident where a stale doc misled an agent and the gate did not catch the result |
+| D-8 | Lint rule "no float money" (grep for `parseFloat`/`toFixed` near money identifiers) | Heuristic and noisy. The pattern module refuses floats at its API | A bench or project defect where float money passed the gate |
+| D-9 | Secret-scan allowlist (fingerprints of known false positives) | Every allowlist is also a bypass. No false positive has been seen on real work yet | A recurring false positive blocking legitimate sessions (record it with class and file, not the value) |
+| D-10 | Git-hook trailer insertion (`prepare-commit-msg`) | Healing at close needs no installation and works with husky-style `core.hooksPath` (RD-3) | Published commits (which close must not rewrite) regularly arriving without trailers |
+| D-11 | `claim` (number reservation across worktrees) | Duplicates are caught by git conflict plus lint (RD-8); shared state across machines is not available | Frequent renumbering pain observed in real parallel work |
+| D-12 | Deletions and diffs in the relay format | Whole-file replies were enough for every bench task | A relay task needing deletions, or files over the 60 KB packet budget |
+| D-13 | Cost/token budget enforcement (`kit run --max-cost`) | The kit cannot see tokens; only harnesses can. The bench records cost where the harness reports it | Projects where runaway agent cost is a recorded problem. Then wire a harness-specific adapter, not a kit feature |
+| D-14 | Reverse traceability (every test file must cite an existing AC id) | Mechanical and cheap, but it would have changed the kit while the benchmark was measuring it | **Partial evidence exists**: in the `money-total` task, Haiku used the money pattern but added no SPEC row in the kit conditions (BENCH.md). Build next and re-run that task |
+| D-15 | Deterministic replay of a session | Model outputs are not reproducible. The record already stores replay *inputs* (base sha, kit version, task, model claim) | A defect investigation that needed more than base + task + kit version to reproduce |
+| D-16 | A shared "planner" prompt that writes `tasks/*.md` | Task files are 5 lines; humans wrote them in tests | Planners repeatedly writing tasks without scopes or with overlapping scopes |
