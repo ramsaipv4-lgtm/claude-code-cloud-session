@@ -1,0 +1,21 @@
+{
+  "_labelling": "Labelled by one person (the kit author) BEFORE any retriever existed; committed in its own commit. Rule: a pattern is relevant iff an implementer of the fragment must solve the problem in that pattern's `solves` field; topical mention alone does not count. dev = may be used to tune the retriever; held = never looked at while tuning.",
+  "fragments": [
+    { "id": "F1", "split": "dev", "text": "Invoice totals are kept in paise as whole numbers; GST at 18% is applied per line and rounded to the nearest paisa, ties to even.", "relevant": ["money-minor-units"] },
+    { "id": "F2", "split": "dev", "text": "The settings file must survive the laptop losing power halfway through saving; on next launch the app opens either the previous or the new settings, never a garbled file.", "relevant": ["atomic-write"] },
+    { "id": "F3", "split": "dev", "text": "Stock movements are never edited. If a delivery was keyed wrong, staff post a correcting movement that points at the original; on-hand quantity is the sum of movements.", "relevant": ["append-only-ledger"] },
+    { "id": "F4", "split": "dev", "text": "Each wholesaler customer sees only their own orders, even if a query forgets to filter.", "relevant": ["tenant-row-level-security"] },
+    { "id": "F5", "split": "dev", "text": "The chorus returns after every verse; the bridge modulates up a whole tone.", "relevant": [] },
+    { "id": "F6", "split": "held", "text": "Shop owners upload last month's price list from Excel; show them which rows are new, which repeat an existing SKU, and which are broken, before anything is saved.", "relevant": ["csv-import-dry-run"] },
+    { "id": "F7", "split": "held", "text": "The tool prints the report and exits 0; bad arguments exit 2; tests run with a frozen 'today' date.", "relevant": ["pure-core-cli-contract"] },
+    { "id": "F8", "split": "held", "text": "Regulators may ask us to prove that no past weighbridge reading was altered after the fact.", "relevant": ["hash-chained-log", "append-only-ledger"] },
+    { "id": "F9", "split": "held", "text": "Delivery drivers record drop-offs in basements with no signal; the records go up when they're back in coverage, without duplicates.", "relevant": ["offline-pwa"] },
+    { "id": "F10", "split": "held", "text": "The payment provider's key must not appear in the repository; the service refuses to start if it's missing.", "relevant": ["secrets-from-env"] },
+    { "id": "F11", "split": "held", "text": "Each lecture is 50 minutes; slides carry speaker notes; every learning objective is assessed by at least one quiz question.", "relevant": [] },
+    { "id": "F12", "split": "held", "text": "Split a ₹1,000 catering bill three ways so the shares add back to exactly the bill.", "relevant": ["money-minor-units"] },
+    { "id": "F13", "split": "held", "text": "The journal export is rewritten in place each night; a crash during the rewrite must not leave a half file that the morning job then reads.", "relevant": ["atomic-write"] },
+    { "id": "F14", "split": "held", "text": "Add a discount_code column to orders; two developers are adding columns on separate branches this week.", "relevant": ["timestamped-migrations"] },
+    { "id": "F15", "split": "held", "text": "Loyalty points are earned and spent; a mistaken award is cancelled by a counter-entry, and the history shows both.", "relevant": ["append-only-ledger"] },
+    { "id": "F16", "split": "held", "text": "Write chapter 3, in which the narrator's sister, introduced in chapter 1 as Meera, returns.", "relevant": [] }
+  ]
+}
