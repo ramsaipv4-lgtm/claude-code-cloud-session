@@ -78,20 +78,55 @@ function commitAll(root, id, subject) {
   return true;
 }
 
+/** This session's own commits: the first-parent chain back to base. Commits that arrive through
+ *  the second parent of a merge (another task's work) belong to their own sessions, not this one. */
+export function ownCommits(root, base, tip) {
+  return G.lines(G.git(['rev-list', '--reverse', '--first-parent', `${base}..${tip}`], { cwd: root }));
+}
+
+/** Files a commit authored: vs its parent; for a merge, only files differing from every parent (the resolution). */
+function commitFiles(root, c) {
+  const parents = G.git(['log', '-1', '--format=%P', c], { cwd: root }).split(' ').filter(Boolean);
+  const names = G.lines(G.git(['show', '--format=', '--name-only', '--no-renames', c], { cwd: root }));
+  if (parents.length <= 1) return G.numstat(parents[0] || G.git(['hash-object', '-t', 'tree', '--stdin'], { cwd: root, input: '' }), c, root);
+  return G.numstat(parents[0], c, root).filter((f) => names.includes(f.path));
+}
+
+function ownSpecDiff(root, own) {
+  const added = new Set(), changed = new Set(), removed = new Set();
+  for (const c of own) {
+    const parents = G.git(['log', '-1', '--format=%P', c], { cwd: root }).split(' ').filter(Boolean);
+    const now = new Map(parseSpec(G.showFile(c, 'SPEC.md', root) || '').map((r) => [r.id, r.raw]));
+    const ps = parents.map((p) => new Map(parseSpec(G.showFile(p, 'SPEC.md', root) || '').map((r) => [r.id, r.raw])));
+    for (const [id, raw] of now) {
+      if (ps.every((m) => !m.has(id))) added.add(id);
+      else if (ps.every((m) => m.get(id) !== raw) && !added.has(id)) changed.add(id);
+    }
+    for (const id of new Set(ps.flatMap((m) => [...m.keys()]))) if (!now.has(id) && ps.every((m) => m.has(id))) { removed.add(id); added.delete(id); changed.delete(id); }
+  }
+  return { added: [...added], changed: [...changed], removed: [...removed] };
+}
+
 /** Everything the record says is computed here, from git. */
 export function facts(root, s, { gate = true } = {}) {
   const tip = G.head(root);
-  const commits = G.commitsInRange(s.base, tip, root);
-  const files = G.numstat(s.base, tip, root);
-  const changed = files.map((f) => f.path);
+  const own = ownCommits(root, s.base, tip);
+  const all = G.commitsInRange(s.base, tip, root);
+  const merged = all.filter((c) => !own.includes(c));
+  const per = new Map();
+  for (const c of own) for (const f of commitFiles(root, c)) {
+    const x = per.get(f.path) || { path: f.path, added: 0, removed: 0 }; x.added += f.added; x.removed += f.removed; per.set(f.path, x);
+  }
+  const files = [...per.values()].sort((a, b) => a.path.localeCompare(b.path));
+  // secret scan deliberately over-covers: everything added in base..tip, merged-in work included
   const items = G.addedLines(s.base, tip, root);
-  for (const c of commits) G.message(c, root).split(/\r?\n/).forEach((t, i) => items.push({ path: `commit ${c.slice(0, 10)} message`, line: i + 1, text: t }));
+  for (const c of all) G.message(c, root).split(/\r?\n/).forEach((t, i) => items.push({ path: `commit ${c.slice(0, 10)} message`, line: i + 1, text: t }));
   const secrets = scan(items);
-  const spec = specDiff(G.showFile(s.base, 'SPEC.md', root), G.showFile(tip, 'SPEC.md', root));
-  const scopeViol = violations(changed, s.scope);
+  const spec = ownSpecDiff(root, own);
+  const scopeViol = violations(files.map((f) => f.path), s.scope);
   const g = gate ? runGate(root, { quiet: false }) : null;
   return {
-    head: tip, commits: commits.map((c) => ({ sha: c, patch_id: G.patchId(c, root) })),
+    head: tip, commits: own.map((c) => ({ sha: c, patch_id: G.patchId(c, root) })), merged_in: merged.length,
     files, lines_added: files.reduce((a, f) => a + f.added, 0), lines_removed: files.reduce((a, f) => a + f.removed, 0),
     secrets, spec, scope_violations: scopeViol, gate: g,
   };
@@ -109,7 +144,7 @@ function renderRecord(s, f, extra) {
     `scope_source: ${s.scope_source}`,
     `model_claimed: ${s.model_claimed || 'unknown'}`, `model_source: ${s.model_source || 'none'}`, `model_verified: false`,
     `kit_version: ${extra.kitVersion}`, `lines_added: ${f.lines_added}`, `lines_removed: ${f.lines_removed}`,
-    `trailers: ${extra.trailers}`,
+    `trailers: ${extra.trailers}`, `merged_in: ${f.merged_in}`,
     `commits:${yamlList(f.commits.map((c) => `${c.sha} ${c.patch_id || '-'}`))}`,
     `files:${yamlList(f.files.map((x) => `${x.path} +${x.added} -${x.removed}`))}`,
     `spec_added:${yamlList(f.spec.added)}`, `spec_changed:${yamlList(f.spec.changed)}`, `spec_removed:${yamlList(f.spec.removed)}`,
@@ -134,7 +169,7 @@ export function close(root, opts = {}) {
     s.base = inferBase(root); writeState(root, s);
   }
   commitAll(root, s.id, 'tins: uncommitted work at close');
-  const heal = healTrailers(root, s, G.commitsInRange(s.base, G.head(root), root));
+  const heal = healTrailers(root, s, ownCommits(root, s.base, G.head(root)));
   if (heal.foreign) {
     for (const f of heal.foreign) reasons.push(`commit ${f.sha.slice(0, 10)} belongs to session ${f.session}, not ${s.id}; two sessions share this branch — use one worktree per session`);
     return { ok: false, reasons, session: s };
@@ -146,7 +181,7 @@ export function close(root, opts = {}) {
   if (!f.commits.length) reasons.push('nothing to record: no commits and no changes since session start');
   if (f.secrets.length) reasons.push(`a secret is in this session's history. Before it leaves this machine: git reset --soft ${s.base.slice(0, 12)}, remove it from the files, then run close again`);
   const handover = opts.handover && !f.secrets.length && f.commits.length;
-  if (reasons.length && !handover) return { ok: false, reasons, session: s };
+  if (reasons.length && !handover) return { ok: false, reasons, session: s, facts: f };
 
   const trailers = heal.rangeAttributed ? `range-attributed:${heal.rangeAttributed.length}` : heal.rewritten ? `healed:${heal.rewritten}` : 'present';
   const rec = renderRecord(s, f, { status: reasons.length ? 'handover' : 'closed', note: opts.note, kitVersion: kitVersion(), trailers });
@@ -207,6 +242,10 @@ export function check(root, base, { gate = true } = {}) {
     const parents = G.git(['log', '-1', '--format=%P', c], { cwd: root }).split(' ').filter(Boolean);
     const t = G.trailers(c, root);
     if (parents.length > 1 && t['Tins-Merge']) continue; // reconciler merge commit, verified below by re-checks
+    if (t['Tins-Task'] && parents.length === 1) { // planner commit: may only add/alter its own task file
+      const fs = G.lines(G.git(['show', '--name-only', '--format=', c], { cwd: root }));
+      if (fs.every((p) => p === `tasks/${t['Tins-Task'][0]}.md`)) continue;
+    }
     const ids = t.Session || [];
     if (ids.length !== 1) { problems.push(`commit ${c.slice(0, 10)}: needs exactly one Session trailer (has ${ids.length})`); continue; }
     if (!bySession.has(ids[0])) bySession.set(ids[0], []);

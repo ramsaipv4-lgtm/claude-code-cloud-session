@@ -13,10 +13,10 @@ export function loadConfig(root) {
 }
 
 export function runGate(root, { quiet = false } = {}) {
-  const steps = [];
-  const say = (s) => { if (!quiet) process.stdout.write(s + '\n'); };
+  const steps = []; const log = [];
+  const say = (s) => { log.push(s); if (!quiet) process.stdout.write(s + '\n'); };
   let cfg;
-  try { cfg = loadConfig(root); } catch (e) { say(`gate: FAIL config — ${e.message}`); return { ok: false, steps: [{ name: 'config', ok: false }] }; }
+  try { cfg = loadConfig(root); } catch (e) { say(`gate: FAIL config — ${e.message}`); return { ok: false, steps: [{ name: 'config', ok: false }], log: log.join('\n') }; }
   const specPath = join(root, 'SPEC.md');
   const problems = existsSync(specPath) ? lintSpec(readFileSync(specPath, 'utf8'), root) : ['SPEC.md missing'];
   steps.push({ name: 'spec', ok: problems.length === 0 });
@@ -32,5 +32,5 @@ export function runGate(root, { quiet = false } = {}) {
   }
   const ok = steps.every((s) => s.ok);
   say(`gate: ${ok ? 'PASS' : 'FAIL'} (${steps.map((s) => `${s.name}=${s.ok ? 'ok' : 'fail'}`).join(', ')})`);
-  return { ok, steps };
+  return { ok, steps, log: log.join('\n') };
 }
