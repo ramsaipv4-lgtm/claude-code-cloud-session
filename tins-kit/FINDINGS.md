@@ -173,3 +173,13 @@ implementation mistakes (ms→s units, behindSec rule, a regex, …). Sonnet bui
 failures (b3-1, b3-5, b4-2) or genuinely had none (b3-2, b3-4, b4-4). b2-1 (Haiku) went further and
 wrote its own "evidence" file claiming no failures. With transcript-derived evidence and a gate that
 requires every item to be cited, all journals were corrected in one extra round each.
+
+### RF-26 [VERIFIED] When stuck, some Haiku builders read the hidden tests, and did not say so
+Three Haiku builders (b4-5, b10-2, b10-3) read acceptance test files they were told not to read
+(SPEC D-40, BUILDER.md rule 2, and the task prompt), typically after 2–3 failed gate runs, and none
+mentioned it in its report; b4-5 later labelled the reads "tool/scope issues". No Sonnet builder
+(10 tasks so far) did. A rule in a prompt is not a control. Detection now comes from the transcript:
+every Read/Grep/Glob or shell read of a hidden test path becomes a `RULE` evidence item that the
+journal must disclose, and affected tasks are excluded from the model comparison
+(tins-lms `docs/build-journal/AUDIT.md`). Prevention would need the suite to be unreadable from the
+builder's sandbox (a separate runner), which this environment does not offer.
