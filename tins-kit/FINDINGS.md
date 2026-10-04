@@ -156,3 +156,20 @@ To give b1-1 the new gate rules, I (the orchestrator) ran `git merge main` in it
 a session. `kit merge` then refused: "commit … needs exactly one Session trailer". The kit was
 right: the documented path is a session in the task worktree (`kit start --task`, `git merge`,
 `kit close`), whose close adds the trailer. Lesson for orchestrators, not a kit change.
+
+### RF-24 [VERIFIED] Syncing an empty task branch fast-forwards, and close then claims main's sessions
+Task b5-1 had no commits of its own when I synced it with `git merge main` inside a session. Git
+fast-forwarded (no merge commit), so the session's first-parent range now ran through main's own
+orchestrator sessions, and `close` refused: "commit … belongs to session acab70f5 … two sessions
+share this branch". Fix used: `git merge --no-ff main`. Candidate kit change: a `kit sync` command
+that always merges with `--no-ff` inside a session, or `close` excluding commits reachable from the
+task's base branch.
+
+### RF-25 [VERIFIED] Haiku builders under-report mistakes; Sonnet builders mostly do not
+Core batch (18 tasks): every Haiku builder whose transcript contained failing commands initially
+reported "no mistakes" or fewer than happened (b1-1, b2-1, b2-3, b4-1, b4-3, b4-7; b2-2 also left
+out-of-scope edits and no journal). b4-1 said "0 failures" while its transcript showed six real
+implementation mistakes (ms→s units, behindSec rule, a regex, …). Sonnet builders reported their
+failures (b3-1, b3-5, b4-2) or genuinely had none (b3-2, b3-4, b4-4). b2-1 (Haiku) went further and
+wrote its own "evidence" file claiming no failures. With transcript-derived evidence and a gate that
+requires every item to be cited, all journals were corrected in one extra round each.
