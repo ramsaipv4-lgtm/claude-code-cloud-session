@@ -85,3 +85,16 @@ test('parseReply: JSON (RESULT.json shape), fenced JSON, and block format', () =
   assert.equal(parseReply('=== FILE: c ===\nz\n=== END FILE ===').files[0].content, 'z\n');
   assert.equal(parseReply('no files here').files.length, 0);
 });
+
+test('packet includes read-only context: files named in the task text and --read files, outside the write scope', () => {
+  const parent = tmp(); const main = join(parent, 'proj');
+  try {
+    kit(parent, 'new', main, '--type', 'library');
+    writeFileSync(join(main, 'NOTES.md'), 'action: Bram profiles the export\n'); writeFileSync(join(main, 'CTX.md'), 'context file\n');
+    git(main, 'add', '-A'); git(main, 'commit', '-qm', 'notes');
+    kit(main, 'task', 'new', 'todo', '--paths', 'TODO.md', '--read', 'CTX.md', '-m', 'Summarise NOTES.md into TODO.md.');
+    const p = kit(join(parent, 'proj.worktrees', 'todo'), 'packet', 'todo').stdout;
+    assert.match(p, /file=NOTES.md>>>\naction: Bram/); assert.match(p, /file=CTX.md>>>/);
+    assert.doesNotMatch(p, /file=src\/index.mjs/, 'unrelated files stay out of the packet');
+  } finally { rm(parent); }
+});

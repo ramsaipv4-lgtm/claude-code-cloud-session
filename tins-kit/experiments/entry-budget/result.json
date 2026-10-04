@@ -1,0 +1,22 @@
+{
+  "model": "claude-haiku-4-5-20251001",
+  "date": "2026-10-04T10:54:52.284Z",
+  "baseline_tokens": 4067,
+  "files": {
+    "ENTRY.md": {
+      "bytes": 1189,
+      "words": 199,
+      "tokens": 327
+    },
+    "RELAY.md": {
+      "bytes": 767,
+      "words": 130,
+      "tokens": 189
+    },
+    "kit patterns (index output)": {
+      "bytes": 2521,
+      "words": 380,
+      "tokens": 577
+    }
+  }
+}

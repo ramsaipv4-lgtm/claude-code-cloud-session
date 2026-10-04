@@ -2,7 +2,7 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { lintSpec } from './spec.mjs';
+import { lintSpec, lintDependencies } from './spec.mjs';
 
 export function loadConfig(root) {
   const p = join(root, 'tins.json');
@@ -19,6 +19,8 @@ export function runGate(root, { quiet = false } = {}) {
   try { cfg = loadConfig(root); } catch (e) { say(`gate: FAIL config — ${e.message}`); return { ok: false, steps: [{ name: 'config', ok: false }], log: log.join('\n') }; }
   const specPath = join(root, 'SPEC.md');
   const problems = existsSync(specPath) ? lintSpec(readFileSync(specPath, 'utf8'), root) : ['SPEC.md missing'];
+  const pkgPath = join(root, 'package.json');
+  if (existsSync(specPath) && existsSync(pkgPath)) problems.push(...lintDependencies(readFileSync(specPath, 'utf8'), readFileSync(pkgPath, 'utf8')));
   steps.push({ name: 'spec', ok: problems.length === 0 });
   for (const p of problems) say(`  spec: ${p}`);
   // NODE_TEST_CONTEXT makes a nested `node --test` report to a parent and exit 0 even when tests

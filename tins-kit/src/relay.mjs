@@ -31,7 +31,11 @@ export function packet(root, id) {
   if (!existsSync(tf)) throw new Error(`no tasks/${id}.md`);
   const t = readTask(readFileSync(tf, 'utf8'));
   const relay = readFileSync(existsSync(join(root, '.tins/kit/RELAY.md')) ? join(root, '.tins/kit/RELAY.md') : join(KIT_ROOT, 'RELAY.md'), 'utf8');
-  const files = ['SPEC.md', ...t.pathList.flatMap((p) => filesUnder(root, p, []))].filter((f, i, a) => a.indexOf(f) === i && existsSync(join(root, f)));
+  // context = SPEC.md + read-only files the task lists (read:) or names in its text + everything in scope (RF-11)
+  const tracked = G.lines(G.git(['ls-files'], { cwd: root }));
+  const named = tracked.filter((f) => !f.startsWith('.tins/') && new RegExp(`(^|[\\s\`'"(])${f.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}($|[\\s\`'".,:;)])`).test(t.body));
+  const readList = (t.read || '').split(',').map((x) => x.trim()).filter(Boolean);
+  const files = ['SPEC.md', ...readList, ...named, ...t.pathList.flatMap((p) => filesUnder(root, p, []))].filter((f, i, a) => a.indexOf(f) === i && existsSync(join(root, f)) && statSync(join(root, f)).isFile());
   let budget = MAX_DATA; const blocks = []; const omitted = [];
   for (const f of files) {
     const text = readFileSync(join(root, f), 'utf8');

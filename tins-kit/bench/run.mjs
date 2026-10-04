@@ -123,7 +123,9 @@ function evaluate(run, cond, taskId, bait, extra) {
 }
 
 function parseUsage(stdout) {
-  try { const j = JSON.parse(stdout); return { served_model: Object.keys(j.modelUsage || {}).join(',') || null, cost_usd: j.total_cost_usd ?? null, output_tokens: j.usage?.output_tokens ?? null, input_tokens: j.usage ? (j.usage.input_tokens || 0) + (j.usage.cache_read_input_tokens || 0) + (j.usage.cache_creation_input_tokens || 0) : null, turns: j.num_turns ?? null }; } catch { return {}; }
+  // the agent's JSON summary may be interleaved with kit run's own output: take the line that parses
+  const line = stdout.split('\n').reverse().find((l) => l.startsWith('{') && l.includes('"usage"')) || stdout;
+  try { const j = JSON.parse(line); return { served_model: Object.keys(j.modelUsage || {}).join(',') || null, cost_usd: j.total_cost_usd ?? null, output_tokens: j.usage?.output_tokens ?? null, input_tokens: j.usage ? (j.usage.input_tokens || 0) + (j.usage.cache_read_input_tokens || 0) + (j.usage.cache_creation_input_tokens || 0) : null, turns: j.num_turns ?? null }; } catch { return {}; }
 }
 
 const results = [];

@@ -16,14 +16,14 @@ export function readTask(text) {
   t.pathList = (t.paths || '').split(',').map((s) => s.trim()).filter(Boolean);
   return t;
 }
-const renderTask = (t) => `---\nid: ${t.id}\npaths: ${t.pathList.join(',')}\nbase: ${t.base}\nstatus: ${t.status}\n---\n\n${t.body}\n`;
+const renderTask = (t) => `---\nid: ${t.id}\npaths: ${t.pathList.join(',')}\n${t.read ? `read: ${t.read}\n` : ''}base: ${t.base}\nstatus: ${t.status}\n---\n\n${t.body}\n`;
 
 export function tasks(root) {
   const d = join(root, 'tasks'); if (!existsSync(d)) return [];
   return readdirSync(d).filter((f) => f.endsWith('.md')).map((f) => readTask(readFileSync(join(d, f), 'utf8'))).filter(Boolean);
 }
 
-export function newTask(root, id, { paths, body = '', dir, overlapOk = false }) {
+export function newTask(root, id, { paths, body = '', dir, overlapOk = false, read = '' }) {
   if (!/^[a-z0-9][a-z0-9-]{0,40}$/.test(id)) throw new Error('task id: lowercase letters, digits, dashes');
   if (!paths || !paths.length) throw new Error('a task needs --paths (its scope); this is what makes parallel work mergeable');
   if (!G.isClean(root)) throw new Error('working tree not clean');
@@ -31,7 +31,7 @@ export function newTask(root, id, { paths, body = '', dir, overlapOk = false }) 
   const clash = tasks(root).filter((t) => t.status === 'open' && overlaps(t.pathList, paths));
   if (clash.length && !overlapOk) throw new Error(`paths overlap open task(s) ${clash.map((t) => t.id).join(', ')}; narrow the scope or pass --overlap-ok (expect merge conflicts)`);
   const base = G.branch(root);
-  const t = { id, pathList: paths, base, status: 'open', body: body || '(describe the task here)' };
+  const t = { id, pathList: paths, read: read || '', base, status: 'open', body: body || '(describe the task here)' };
   mkdirSync(join(root, 'tasks'), { recursive: true });
   writeFileSync(join(root, 'tasks', `${id}.md`), renderTask(t));
   G.git(['add', '--', `tasks/${id}.md`], { cwd: root });
@@ -80,9 +80,9 @@ export function merge(root, id) {
 export function cli(root, o) {
   const [sub, id] = o._;
   if (sub === 'list') { for (const t of tasks(root)) console.log(`${t.id.padEnd(20)} ${t.status.padEnd(7)} ${t.pathList.join(',')}`); return; }
-  if (sub !== 'new' || !id) { console.error('usage: kit task new <id> --paths a,b [-m "description"] [--dir path] [--overlap-ok] | kit task list'); process.exit(2); }
+  if (sub !== 'new' || !id) { console.error('usage: kit task new <id> --paths a,b [--read c,d] [-m "description"] [--dir path] [--overlap-ok] | kit task list'); process.exit(2); }
   const paths = typeof o.paths === 'string' ? o.paths.split(',').map((s) => s.trim()).filter(Boolean) : null;
-  const r = newTask(root, id, { paths, body: o.m, dir: typeof o.dir === 'string' ? o.dir : undefined, overlapOk: !!o['overlap-ok'] });
+  const r = newTask(root, id, { paths, body: o.m, dir: typeof o.dir === 'string' ? o.dir : undefined, overlapOk: !!o['overlap-ok'], read: typeof o.read === 'string' ? o.read : '' });
   console.log(`task ${id}: branch task/${id}, worktree ${r.worktree}\nworker: cd ${r.worktree} && node .tins/kit/bin/kit.mjs run --task ${id} -- <agent command>\nrelay:  cd ${r.worktree} && node .tins/kit/bin/kit.mjs packet ${id}`);
 }
 

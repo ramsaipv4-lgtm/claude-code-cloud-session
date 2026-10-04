@@ -51,3 +51,13 @@ export function specDiff(before, after) {
   const changed = [...b.keys()].filter((k) => a.has(k) && a.get(k) !== b.get(k));
   return { added, changed, removed };
 }
+
+/** Standing rule "no dependency without a SPEC decision", made mechanical: every package.json
+ *  dependency must be named in a locked D-row. */
+export function lintDependencies(specText, pkgText) {
+  if (!pkgText) return [];
+  const pkg = JSON.parse(pkgText);
+  const decided = parseSpec(specText).filter((r) => r.id.startsWith('D-') && /^locked$/i.test(r.cells[1] || '')).map((r) => r.cells[0]).join(' ');
+  return Object.keys({ ...(pkg.dependencies || {}), ...(pkg.devDependencies || {}), ...(pkg.optionalDependencies || {}) })
+    .filter((d) => !decided.includes(d)).map((d) => `dependency "${d}" is not named in any locked D-row of SPEC.md`);
+}

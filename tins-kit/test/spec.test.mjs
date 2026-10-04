@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { lintSpec, specDiff } from '../src/spec.mjs';
+import { lintSpec, specDiff, lintDependencies } from '../src/spec.mjs';
 import { violations, overlaps, safeRelative } from '../src/scope.mjs';
 import { tmp, write, rm } from './helpers.mjs';
 
@@ -37,4 +37,12 @@ test('scope rules', () => {
   assert.ok(overlaps(['src/a'], ['src'])); assert.ok(!overlaps(['src/a'], ['src/b'])); assert.ok(overlaps(null, ['x']));
   for (const bad of ['../x', '/etc/passwd', 'C:/x', 'a/../../b', '', 'a//b']) assert.ok(!safeRelative(bad), bad);
   assert.ok(safeRelative('src/a.mjs'));
+});
+
+test('dependencies must be named in a locked D-row', () => {
+  const spec = T(['| D-1 | Use zod for validation | locked |', '| D-2 | Maybe lodash | open |']);
+  assert.deepEqual(lintDependencies(spec, JSON.stringify({ dependencies: { zod: '1' } })), []);
+  assert.deepEqual(lintDependencies(spec, JSON.stringify({ dependencies: { lodash: '1' }, devDependencies: { typescript: '5' } })),
+    ['dependency "lodash" is not named in any locked D-row of SPEC.md', 'dependency "typescript" is not named in any locked D-row of SPEC.md']);
+  assert.deepEqual(lintDependencies(spec, null), []);
 });
