@@ -1,0 +1,16 @@
+{
+ "type": "library",
+ "paths": [
+  "TODO.md"
+ ],
+ "must_exist": [
+  "test/index.test.mjs"
+ ],
+ "prompt": "Read NOTES.md and write its action items (who does what) as a bullet list in TODO.md.",
+ "must_match": [
+  [
+   "SPEC.md",
+   "^\\| AC-1 \\|"
+  ]
+ ]
+}
