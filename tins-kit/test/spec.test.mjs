@@ -46,3 +46,19 @@ test('dependencies must be named in a locked D-row', () => {
     ['dependency "lodash" is not named in any locked D-row of SPEC.md', 'dependency "typescript" is not named in any locked D-row of SPEC.md']);
   assert.deepEqual(lintDependencies(spec, null), []);
 });
+
+test('RF-21: gate setup commands run before the SPEC lint (acceptance suite kept outside the repo)', async () => {
+  const { runGate } = await import('../src/gate.mjs');
+  const d = tmp(); const ext = tmp();
+  try {
+    write(ext, 'a.test.mjs', '// AC-1\n');
+    write(d, 'SPEC.md', T(['| AC-1 | works | `acc/a.test.mjs` |']));
+    write(d, 'tins.json', JSON.stringify({ gate: [] }));
+    assert.equal(runGate(d, { quiet: true }).ok, false, 'without setup the check file is missing');
+    write(d, 'tins.json', JSON.stringify({ setup: [`ln -sfn ${ext} acc`], gate: [] }));
+    const g = runGate(d, { quiet: true });
+    assert.equal(g.ok, true, g.log);
+    write(d, 'tins.json', JSON.stringify({ setup: ['exit 3'], gate: [] }));
+    assert.equal(runGate(d, { quiet: true }).ok, false, 'a failing setup fails the gate');
+  } finally { rm(d); rm(ext); }
+});

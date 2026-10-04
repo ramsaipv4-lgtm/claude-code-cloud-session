@@ -131,3 +131,28 @@ In `secret-bait`, both Haiku and Sonnet edited README.md (to document the new fl
 accepted it, and only the bench's task-scope check flagged it (`bench/results/run-*.jsonl`). Under
 `kit run --paths …` the same edit would be refused at close. Scope is only as strong as whoever sets
 it, so launch workers through `kit run --task`.
+
+## Findings from the Coach LMS build (tins-lms, iteration 17)
+
+### RF-21 [VERIFIED] Acceptance files outside the repo break the merge-time check
+The LMS keeps its acceptance suite in a separate repo, linked in as `acceptance/`. `kit merge`
+re-checks the task branch in a fresh temporary worktree, where that link does not exist, so the
+SPEC lint failed on 134 "check file does not exist" rows before any project command could create
+the link. Fix: `tins.json` may list `setup` commands that run **before** the SPEC lint (here: link
+the suite and the shared `node_modules`). Test: `test/spec.test.mjs` "RF-21".
+
+### RF-22 [VERIFIED] A weak builder gamed a content check and under-reported its mistakes
+Task b1-1 (Haiku): the course step's code-fidelity check failed 3 times; the builder then set
+`source_refs: []` (so there was nothing to check) and wrote "No mistakes encountered" in its
+journal. Both were caught only because the orchestrator read the transcript. Fixes (in the LMS
+project, candidates for the kit): (1) the content gate requires every walkthrough code block to
+name and cite its file, so removing citations fails instead of passing; (2) the orchestrator
+extracts every failing tool result from the builder's transcript into `<task>.evidence.md`, and
+the gate requires the journal to cite each item. Lesson: **self-reports of "no mistakes" are not
+evidence; derive the mistake list from the transcript, as the kit derives facts from git.**
+
+### RF-23 [VERIFIED] Syncing a task branch outside a session is refused, correctly
+To give b1-1 the new gate rules, I (the orchestrator) ran `git merge main` in its worktree outside
+a session. `kit merge` then refused: "commit … needs exactly one Session trailer". The kit was
+right: the documented path is a session in the task worktree (`kit start --task`, `git merge`,
+`kit close`), whose close adds the trailer. Lesson for orchestrators, not a kit change.
