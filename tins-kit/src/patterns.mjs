@@ -108,9 +108,12 @@ export function addCli(root, o) {
   if (!p.module) { console.error(`${id} is prose only (status ${p.status}); read ${join(p.dir, 'PATTERN.md')}`); process.exit(1); }
   const to = o.to || 'lib'; mkdirSync(join(root, to), { recursive: true });
   const lockPath = join(root, '.tins', 'patterns.lock'); const lock = existsSync(lockPath) ? JSON.parse(readFileSync(lockPath, 'utf8')) : {};
-  for (const f of [p.module, p.test]) { copyFileSync(join(p.dir, f), join(root, to, f)); }
-  lock[id] = { files: [p.module, p.test].map((f) => `${to}/${f}`), hash: Object.fromEntries([p.module, p.test].map((f) => [f, sha(join(p.dir, f))])) };
+  // pattern tests are named *.pattern-test.mjs in the kit (so a project's `node --test` does not run the
+  // vendored copies) and become *.test.mjs when copied in (so the project's gate does run them).
+  const dest = (f) => f.replace(/\.pattern-test\.mjs$/, '.test.mjs');
+  for (const f of [p.module, p.test]) copyFileSync(join(p.dir, f), join(root, to, dest(f)));
+  lock[id] = { files: [p.module, p.test].map((f) => `${to}/${dest(f)}`), hash: Object.fromEntries([p.module, p.test].map((f) => [dest(f), sha(join(p.dir, f))])) };
   mkdirSync(join(root, '.tins'), { recursive: true }); writeFileSync(lockPath, JSON.stringify(lock, null, 2) + '\n');
-  console.log(`copied ${p.module}, ${p.test} -> ${to}/; pinned in .tins/patterns.lock`);
+  console.log(`copied ${p.module}, ${dest(p.test)} -> ${to}/; pinned in .tins/patterns.lock`);
 }
 export { sha as fileHash };

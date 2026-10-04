@@ -2,7 +2,7 @@
 // either succeed or self-heal; none may leave the agent stuck.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { miniProject, kit, git, write, read, rm, FAKE, exists } from './helpers.mjs';
+import { miniProject, kit, git, write, read, rm, FAKE, exists, KIT_BIN } from './helpers.mjs';
 
 const lastRecord = (d) => {
   // the record of the most recent close commit (file names sort by second + random id, so not by time)
@@ -189,5 +189,15 @@ test('check re-derives: a forged "clean" record does not hide a secret', () => {
     git(d, 'add', '-A'); git(d, 'commit', '-qm', 'leak', '-m', `Session: ${id}`);
     const c = kit(d, 'check', '--base', base);
     assert.equal(c.code, 1); assert.match(c.out, /src\/leak.mjs:1: anthropic-key/);
+  } finally { rm(d); }
+});
+
+test('kit run where the agent already ran close itself: success, no duplicate record', () => {
+  const d = miniProject();
+  try {
+    const agent = `require('fs').writeFileSync('src/z.mjs','export const z = 1;\\n'); require('child_process').execFileSync(process.execPath, [${JSON.stringify(KIT_BIN)}, 'close'], { stdio: 'inherit' })`;
+    const r = kit(d, 'run', '--', process.execPath, '-e', agent);
+    assert.equal(r.code, 0, r.out);
+    assert.equal(git(d, 'ls-files', 'sessions').split('\n').filter(Boolean).length, 1);
   } finally { rm(d); }
 });

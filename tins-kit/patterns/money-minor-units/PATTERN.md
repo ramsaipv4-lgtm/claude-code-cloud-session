@@ -8,7 +8,7 @@ consumers: fish-inventory (ASSUMED, brief 2.2.2), builder-2 (ASSUMED, brief 2.2.
 license: MIT, written for tins-kit
 source: original
 module: money.mjs
-test: money.test.mjs
+test: money.pattern-test.mjs
 ---
 # Money as integer minor units
 

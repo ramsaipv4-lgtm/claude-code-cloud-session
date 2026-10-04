@@ -246,5 +246,10 @@ export function run(root, argv, opts = {}) {
   const t0 = Date.now();
   const r = spawnSync(argv[0], argv.slice(1), { cwd: root, stdio: 'inherit', shell: process.platform === 'win32', env: { ...process.env, TINS_SESSION: s.id }, timeout: opts.timeoutS ? opts.timeoutS * 1000 : undefined });
   const note = [`agent command exit: ${r.status}${r.signal ? ' signal ' + r.signal : ''}`, `agent wall time: ${Math.round((Date.now() - t0) / 1000)}s`, opts.note || ''].filter(Boolean).join('\n');
+  // The agent may have obeyed AGENTS.md and closed the session itself; that must not turn into a failure.
+  if (!readState(root) && G.isClean(root) && G.message('HEAD', root).startsWith(CLOSE_PREFIX + s.id)) {
+    const rec = G.git(['show', '--name-only', '--format=', 'HEAD'], { cwd: root });
+    return { ok: true, record: rec, session: s, reasons: [], closedByAgent: true };
+  }
   return close(root, { note, handover: opts.handover });
 }

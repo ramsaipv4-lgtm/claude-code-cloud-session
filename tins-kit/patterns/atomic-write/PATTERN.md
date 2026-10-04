@@ -8,7 +8,7 @@ consumers: builder-1 (ASSUMED, brief 2.2.2), builder-2 (ASSUMED, brief 2.2.2)
 license: MIT, written for tins-kit
 source: original
 module: atomic-write.mjs
-test: atomic-write.test.mjs
+test: atomic-write.pattern-test.mjs
 ---
 # Atomic file write
 

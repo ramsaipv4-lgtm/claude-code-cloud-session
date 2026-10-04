@@ -8,7 +8,7 @@ consumers: builder-1 (ASSUMED, brief 2.2.2), builder-2 (ASSUMED, brief 2.2.2)
 license: MIT, written for tins-kit
 source: original
 module: ledger.mjs
-test: ledger.test.mjs
+test: ledger.pattern-test.mjs
 ---
 # Append-only ledger with reversal chains
 
