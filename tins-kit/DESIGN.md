@@ -222,3 +222,30 @@ must read is `AGENTS.md` (= `ENTRY.md`).
 - **Cost**: no automated "is this lesson a duplicate?" check.
 - **Tested**: `kit.test.mjs` / `lint-kit` (status rules, expiry), `scaffold.test.mjs` (pinning), `doctor` (changed pins).
 - **Merge note**: replaces `kit-ingest`, `kit-proposal-check` and `kit-new-pattern`.
+
+### RD-20 "Never fix a defect in code alone" becomes a close-time rule with a recorded escape
+- **Problem**: ENTRY rule 2 (SPEC first) was obeyed inconsistently. Haiku added no SPEC row in 3 of
+  4 kit-condition `money-total` runs, while changing `src/` (`bench/results/run-haiku.jsonl`,
+  VERIFIED). An exhortation alone does not hold (brief rule 4).
+- **Options**:
+  - (a) do nothing (record `spec_added: []` and let a reviewer notice);
+  - (b) reverse traceability: every test file must cite an AC id. It would not have fired, because
+    Haiku wrote no test under `test/` in those runs (VERIFIED from `files_changed`);
+  - (c) at `close`, if the session changed a **behaviour path** (`tins.json` `behaviour_paths`:
+    `src` for cli/library, `src`+`public` for web, none for content) and no D-n/AC-n row was added,
+    changed or removed, refuse. The way out is to add the row, or `close --why "<reason>"`, which is
+    recorded as `spec_waiver` (an agent claim a reviewer can see).
+- **Choice**: (c).
+- **Why**: it targets the observed failure exactly, it is mechanical, and the escape hatch is
+  visible, not silent. Content projects are exempt because editing prose *is* the work; their
+  ACs constrain it.
+- **Cost**:
+  - Under `kit run`, an agent that neither updates SPEC nor runs `close` itself leaves a refused
+    session, which a human must finish.
+  - Relay replies must include the SPEC change (the refusal is fed back in the next packet).
+  - `--why` can be abused. It is recorded, not judged.
+- **Tested**: `session-safety.test.mjs` (refuse / `--why` passes and is recorded / a SPEC row
+  passes); `relay.test.mjs` (a code-only reply is refused and the reason reaches the next packet).
+  Bench effect: BENCH.md, "RD-20 experiment".
+- **Merge note**: new `tins.json` key `behaviour_paths`; new record field `spec_waiver`; new flag
+  `close --why` (also `run --why` for launchers). Projects without the key are unaffected.

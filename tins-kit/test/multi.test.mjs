@@ -79,7 +79,7 @@ test('reconciler refuses a task whose worker ignored its scope (ran without --ta
     kit(parent, 'new', main, '--type', 'library');
     kit(main, 'task', 'new', 'gamma', '--paths', 'src/gamma.mjs');
     const wt = join(parent, 'proj.worktrees', 'gamma');
-    const r = kit(wt, 'run', '--', process.execPath, '-e', "require('fs').writeFileSync('src/gamma.mjs','export const g=1;\\n'); require('fs').writeFileSync('README.md','hijack\\n')");
+    const r = kit(wt, 'run', '--why', 'test fixture: behaviour change without spec on purpose', '--', process.execPath, '-e', "require('fs').writeFileSync('src/gamma.mjs','export const g=1;\\n'); require('fs').writeFileSync('README.md','hijack\\n')");
     assert.equal(r.code, 0, 'default scope allows README.md, so the worker\'s own close passes');
     const m = kit(main, 'merge', 'gamma');
     assert.equal(m.code, 1); assert.match(m.out, /README.md is outside task gamma's paths/);
@@ -94,7 +94,7 @@ test('reconciler refuses when each side passes alone but the merged tree fails t
     kit(main, 'task', 'new', 'extra', '--paths', 'test/extra.test.mjs');
     const w1 = join(parent, 'proj.worktrees', 'v2'); const w2 = join(parent, 'proj.worktrees', 'extra');
     // v2 changes version to 0.2.0 (and its own test); extra adds a test pinning 0.1.0 — semantic, not textual, conflict
-    assert.equal(kit(w1, 'run', '--task', 'v2', '--', process.execPath, '-e', "const fs=require('fs'); fs.writeFileSync('src/index.mjs', fs.readFileSync('src/index.mjs','utf8').replace('0.1.0','0.2.0')); fs.writeFileSync('test/index.test.mjs', fs.readFileSync('test/index.test.mjs','utf8').replace('0.1.0','0.2.0'))").code, 0);
+    assert.equal(kit(w1, 'run', '--task', 'v2', '--why', 'fixture', '--', process.execPath, '-e', "const fs=require('fs'); fs.writeFileSync('src/index.mjs', fs.readFileSync('src/index.mjs','utf8').replace('0.1.0','0.2.0')); fs.writeFileSync('test/index.test.mjs', fs.readFileSync('test/index.test.mjs','utf8').replace('0.1.0','0.2.0'))").code, 0);
     assert.equal(kit(w2, 'run', '--task', 'extra', '--', process.execPath, '-e', "require('fs').writeFileSync('test/extra.test.mjs', 'import {test} from \"node:test\"; import a from \"node:assert\"; import {version} from \"../src/index.mjs\"; test(\"pin\", ()=>a.equal(version(), \"0.1.0\"));\\n')").code, 0);
     assert.equal(kit(main, 'merge', 'v2').code, 0);
     const before = git(main, 'rev-parse', 'HEAD');

@@ -149,6 +149,7 @@ function renderRecord(s, f, extra) {
     `files:${yamlList(f.files.map((x) => `${x.path} +${x.added} -${x.removed}`))}`,
     `spec_added:${yamlList(f.spec.added)}`, `spec_changed:${yamlList(f.spec.changed)}`, `spec_removed:${yamlList(f.spec.removed)}`,
     `dirty_at_start:${yamlList(s.dirty_at_start || [])}`,
+    `spec_waiver: ${extra.why ? JSON.stringify(extra.why) : ''}`,
     '---', '',
     `# Session ${s.id}`, '',
     'Everything above is derived from git by `kit close`. Text below is the agent\'s own note: a claim, not a fact.', '',
@@ -181,11 +182,18 @@ export function close(root, opts = {}) {
   if (!f.commits.length) reasons.push('nothing to record: no commits and no changes since session start');
   if (f.secrets.length) reasons.push(`a secret is in this session's history. Before it leaves this machine: git reset --soft ${s.base.slice(0, 12)}, remove it from the files, then run close again`);
   if (!f.commits.length) { unlinkSync(stateFile(root)); reasons.push('session discarded (it recorded nothing)'); return { ok: false, reasons, session: s, facts: f }; }
+  // "Never fix a defect in code alone" made mechanical (RD-20): a session that changes behaviour paths
+  // must add/change a SPEC row, or state why not (--why), which is recorded as the agent's claim.
+  let behaviour = [];
+  try { behaviour = JSON.parse(readFileSync(join(root, 'tins.json'), 'utf8')).behaviour_paths || []; } catch {}
+  const touched = f.files.map((x) => x.path).filter((p) => behaviour.some((b) => p === b || p.startsWith(b + '/')));
+  const specMoved = f.spec.added.length + f.spec.changed.length + f.spec.removed.length > 0;
+  if (touched.length && !specMoved && !opts.why) reasons.push(`changed ${touched.slice(0, 3).join(', ')}${touched.length > 3 ? ' …' : ''} but no D-n/AC-n row in SPEC.md was added or changed. Add or adjust the row that describes this behaviour; if behaviour did not change (refactor, comments), run close again with --why "<reason>"`);
   const handover = opts.handover && !f.secrets.length && f.commits.length;
   if (reasons.length && !handover) return { ok: false, reasons, session: s, facts: f };
 
   const trailers = heal.rangeAttributed ? `range-attributed:${heal.rangeAttributed.length}` : heal.rewritten ? `healed:${heal.rewritten}` : 'present';
-  const rec = renderRecord(s, f, { status: reasons.length ? 'handover' : 'closed', note: opts.note, kitVersion: kitVersion(), trailers });
+  const rec = renderRecord(s, f, { status: reasons.length ? 'handover' : 'closed', note: opts.note, kitVersion: kitVersion(), trailers, why: opts.why });
   const recFindings = scan(rec.split(/\r?\n/).map((t, i) => ({ path: 'record', line: i + 1, text: t })));
   if (recFindings.length) return { ok: false, reasons: recFindings.map((x) => `secret in note: ${formatFinding(x)}`), session: s };
   const stamp = s.started.replace(/[-:]/g, '').replace(/\..*|Z$/, '');
@@ -291,5 +299,5 @@ export function run(root, argv, opts = {}) {
     const rec = G.git(['show', '--name-only', '--format=', 'HEAD'], { cwd: root });
     return { ok: true, record: rec, session: s, reasons: [], closedByAgent: true };
   }
-  return close(root, { note, handover: opts.handover });
+  return close(root, { note, handover: opts.handover, why: opts.why });
 }

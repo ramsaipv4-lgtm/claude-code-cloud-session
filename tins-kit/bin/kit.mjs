@@ -11,7 +11,7 @@ import * as V from '../src/version.mjs';
 const HELP = `kit — tins-kit. Commands (run inside a TINS project unless noted):
   gate                          run SPEC lint + tins.json gate commands (no skip flag exists)
   run [opts] -- <agent cmd...>  start a session, run the agent, close the session
-  start [opts] | close [--note T] [--handover] | status | abort
+  start [opts] | close [--note T] [--why T] [--handover] | status | abort
   check --base <ref>            merge-time verification of every commit in <ref>..HEAD
   scan <file...>                secret scan files (prints class + line, never the value)
   patterns <text> | --spec F    find proven building blocks for a need or a spec
@@ -45,7 +45,7 @@ function report(r) {
 
 const [cmd, ...argv] = process.argv.slice(2);
 const o = parse(argv);
-const opts = { task: o.task, paths: list(o.paths), model: o.model, modelSource: o['model-source'], timeoutS: o.timeout ? +o.timeout : undefined, note: o.note, handover: !!o.handover };
+const opts = { task: o.task, paths: list(o.paths), model: o.model, modelSource: o['model-source'], timeoutS: o.timeout ? +o.timeout : undefined, note: o.note, handover: !!o.handover, why: typeof o.why === 'string' ? o.why : undefined };
 
 async function main() {
   switch (cmd) {

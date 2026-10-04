@@ -105,3 +105,22 @@ test('gate is not fooled by an inherited NODE_TEST_CONTEXT (nested node --test e
     assert.equal(r.code, 1, r.out);
   } finally { rm(d); }
 });
+
+test('SPEC-first is mechanical: behaviour change without a SPEC row refuses close; a SPEC row or a recorded --why passes (RD-20)', () => {
+  const d = miniProject();
+  try {
+    write(d, 'tins.json', JSON.stringify({ type: 'library', gate: ['node --test'], behaviour_paths: ['src'] }));
+    git(d, 'add', '-A'); git(d, 'commit', '-qm', 'behaviour paths');
+    kit(d, 'start');
+    write(d, 'src/extra.mjs', 'export const e = 1;\n');
+    const r = kit(d, 'close');
+    assert.equal(r.code, 1); assert.match(r.out, /changed src\/extra.mjs but no D-n\/AC-n row/);
+    const w = kit(d, 'close', '--why', 'internal helper, no observable behaviour');
+    assert.equal(w.code, 0, w.out);
+    assert.match(read(d, w.out.match(/-> (sessions\/\S+)/)[1]), /spec_waiver: "internal helper, no observable behaviour"/);
+    kit(d, 'start');
+    write(d, 'src/more.mjs', 'export const m = 1;\n');
+    write(d, 'SPEC.md', read(d, 'SPEC.md').replace('| D-1 |', '| D-2 | more() exists | locked |\n| D-1 |'));
+    assert.equal(kit(d, 'close').code, 0, 'a SPEC row satisfies it');
+  } finally { rm(d); }
+});

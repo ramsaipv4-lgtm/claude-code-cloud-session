@@ -5,10 +5,10 @@ import * as G from './git.mjs';
 import { KIT_ROOT, manifest, render } from './version.mjs';
 
 export const TYPES = {
-  cli: { gate: ['node --test'], pkg: true },
-  library: { gate: ['node --test'], pkg: true },
-  web: { gate: ['node --test'], pkg: true, scripts: { start: 'node src/server.mjs' } },
-  content: { gate: ['node --test'], pkg: false },
+  cli: { gate: ['node --test'], pkg: true, behaviour: ['src'] },
+  library: { gate: ['node --test'], pkg: true, behaviour: ['src'] },
+  web: { gate: ['node --test'], pkg: true, scripts: { start: 'node src/server.mjs' }, behaviour: ['src', 'public'] },
+  content: { gate: ['node --test'], pkg: false, behaviour: [] }, // prose edits are the work itself; ACs constrain them
 };
 /** What a project vendors: enough to run every kit command offline, nothing else. */
 export const VENDORED = ['bin', 'src', 'patterns', 'ENTRY.md', 'RELAY.md'];
@@ -43,7 +43,7 @@ export function scaffold(dir, type, name = basename(resolve(dir))) {
   copyTree(join(KIT_ROOT, 'templates', type), dir, subst);
   writeFileSync(join(dir, 'AGENTS.md'), readFileSync(join(KIT_ROOT, 'ENTRY.md'), 'utf8'));
   const stamp = vendorKit(dir);
-  writeFileSync(join(dir, 'tins.json'), JSON.stringify({ type, gate: T.gate, kit: stamp }, null, 2) + '\n');
+  writeFileSync(join(dir, 'tins.json'), JSON.stringify({ type, gate: T.gate, behaviour_paths: T.behaviour, kit: stamp }, null, 2) + '\n');
   if (T.pkg) {
     const pkg = { name: name.toLowerCase().replace(/[^a-z0-9-]/g, '-'), version: '0.1.0', private: true, type: 'module',
       scripts: { ...(T.scripts || {}), test: 'node --test', gate: 'node .tins/kit/bin/kit.mjs gate' } };

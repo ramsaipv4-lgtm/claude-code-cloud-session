@@ -49,7 +49,8 @@ test('apply: good reply (block format) -> files written, gate run, session recor
   const { parent, wt } = project();
   try {
     const cli = readFileSync(join(wt, 'src/cli.mjs'), 'utf8').replace("return { code: 0, out: '', err: '' };\n}", "return { code: 0, out: '', err: '' };\n}\n// shout support pending\n");
-    writeFileSync(join(parent, 'r.txt'), `Sure! Here you go.\n=== FILE: src/cli.mjs ===\n${cli}=== END FILE ===\n=== NOTES ===\nadded a comment\n=== END NOTES ===\n`);
+    const spec = readFileSync(join(wt, 'SPEC.md'), 'utf8').replace('| D-2 |', '| D-3 | Shout support is pending | open |\n| D-2 |');
+    writeFileSync(join(parent, 'r.txt'), `Sure! Here you go.\n=== FILE: SPEC.md ===\n${spec}=== END FILE ===\n=== FILE: src/cli.mjs ===\n${cli}=== END FILE ===\n=== NOTES ===\nadded a comment\n=== END NOTES ===\n`);
     const r = kit(wt, 'apply', 'shout', join(parent, 'r.txt'), '--model', 'some-chat-model');
     assert.equal(r.code, 0, r.out);
     const rec = readFileSync(join(wt, r.out.match(/-> (sessions\/\S+)/)[1]), 'utf8');
@@ -96,5 +97,16 @@ test('packet includes read-only context: files named in the task text and --read
     const p = kit(join(parent, 'proj.worktrees', 'todo'), 'packet', 'todo').stdout;
     assert.match(p, /file=NOTES.md>>>\naction: Bram/); assert.match(p, /file=CTX.md>>>/);
     assert.doesNotMatch(p, /file=src\/index.mjs/, 'unrelated files stay out of the packet');
+  } finally { rm(parent); }
+});
+
+test('apply: a code-only reply is refused with the SPEC-first reason, and the next packet carries it back (RD-20)', () => {
+  const { parent, wt } = project();
+  try {
+    const cli = readFileSync(join(wt, 'src/cli.mjs'), 'utf8') + '// tweak\n';
+    writeFileSync(join(parent, 'r.txt'), `=== FILE: src/cli.mjs ===\n${cli}=== END FILE ===\n`);
+    const r = kit(wt, 'apply', 'shout', join(parent, 'r.txt'));
+    assert.equal(r.code, 1); assert.match(r.out, /no D-n\/AC-n row in SPEC.md was added or changed/);
+    assert.match(kit(wt, 'packet', 'shout').stdout, /PREVIOUS ATTEMPT[\s\S]*no D-n\/AC-n row/);
   } finally { rm(parent); }
 });

@@ -66,7 +66,7 @@ to the incumbent's code, so incumbent formats are as described in the brief (ASS
 
 | Rule | Verdict | How it is held now |
 |---|---|---|
-| never edit generated code to fix a defect | kept, exhortational | ENTRY rule 2. Visible after the fact: the record's `spec_added/changed` is empty when only code changed. Not enforceable (OPEN-QUESTIONS.md Q-3) |
+| never edit generated code to fix a defect | kept, **now mechanical with a recorded escape** | `close` refuses a session that changed `behaviour_paths` without touching a D-n/AC-n row, unless `--why` is given (recorded as `spec_waiver`), RD-20 |
 | never add a dependency without amending the spec | kept, **now mechanical** | Gate fails if a `package.json` dependency is not named in a locked D-row |
 | never add a schema change without a migration | dropped from core | Web-specific. Belongs in a web project's own gate commands |
 | never store money as float | kept, via pattern | `money-minor-units` module refuses float quantities. Not lint-enforced (DEFERRED.md D-8) |
@@ -77,7 +77,7 @@ to the incumbent's code, so incumbent formats are as described in the brief (ASS
 
 ## New names a merger will meet
 
-`tins.json` (`type`, `gate[]`, `kit`, optional `gate_timeout_s`) · `.tins/kit/` (vendored kit) ·
+`tins.json` (`type`, `gate[]`, `behaviour_paths[]`, `kit`, optional `gate_timeout_s`) · `.tins/kit/` (vendored kit) ·
 `.tins/patterns.lock` · `tasks/<id>.md` (front matter `id paths read base status`) · trailers
 `Tins-Task:` and `Tins-Merge:` · branch `task/<id>` · worktree `<repo>.worktrees/<id>` ·
 untracked state `.git/tins-session.json` and `.git/tins-relay-feedback.txt` · exit codes:
