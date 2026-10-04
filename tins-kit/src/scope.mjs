@@ -1,5 +1,5 @@
 // Scope: which paths a session may change. Enforced on the git diff, not asked of the model.
-export const PROTECTED = ['.tins', 'tins.json', 'sessions', 'tasks'];
+export const PROTECTED = ['.tins/kit', 'tins.json', 'sessions', 'tasks'];
 
 const norm = (p) => p.replace(/\\/g, '/').replace(/^\.\//, '').replace(/\/+$/, '');
 const under = (p, prefix) => prefix === '' || prefix === '.' || p === prefix || p.startsWith(prefix + '/');

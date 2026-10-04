@@ -1,0 +1,50 @@
+{
+  "model": "claude-haiku-4-5-20251001",
+  "index_chars": 2476,
+  "date": "2026-10-04T10:36:32.063Z",
+  "results": {
+    "F1": [
+      "money-minor-units"
+    ],
+    "F2": [
+      "atomic-write"
+    ],
+    "F3": [
+      "append-only-ledger"
+    ],
+    "F4": [
+      "tenant-row-level-security"
+    ],
+    "F5": [],
+    "F6": [
+      "csv-import-dry-run"
+    ],
+    "F7": [
+      "pure-core-cli-contract"
+    ],
+    "F8": [
+      "append-only-ledger",
+      "hash-chained-log"
+    ],
+    "F9": [
+      "offline-pwa"
+    ],
+    "F10": [
+      "secrets-from-env"
+    ],
+    "F11": [],
+    "F12": [
+      "money-minor-units"
+    ],
+    "F13": [
+      "atomic-write"
+    ],
+    "F14": [
+      "timestamped-migrations"
+    ],
+    "F15": [
+      "append-only-ledger"
+    ],
+    "F16": []
+  }
+}

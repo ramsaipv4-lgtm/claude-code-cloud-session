@@ -1,0 +1,852 @@
+{
+  "threshold": 7,
+  "patterns": 11,
+  "methods": {
+    "old_triggers": {
+      "dev": {
+        "relevant": 4,
+        "missed": 3,
+        "miss_rate": 0.75,
+        "returned": 1,
+        "false_pos": 0,
+        "fp_rate": 0,
+        "rows": [
+          {
+            "id": "F1",
+            "got": [],
+            "missed": [
+              "money-minor-units"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F2",
+            "got": [],
+            "missed": [
+              "atomic-write"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F3",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F4",
+            "got": [],
+            "missed": [
+              "tenant-row-level-security"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F5",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      },
+      "held": {
+        "relevant": 10,
+        "missed": 8,
+        "miss_rate": 0.8,
+        "returned": 4,
+        "false_pos": 2,
+        "fp_rate": 0.5,
+        "rows": [
+          {
+            "id": "F6",
+            "got": [
+              "csv-import-dry-run",
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": [
+              "money-minor-units"
+            ]
+          },
+          {
+            "id": "F7",
+            "got": [],
+            "missed": [
+              "pure-core-cli-contract"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F8",
+            "got": [],
+            "missed": [
+              "hash-chained-log",
+              "append-only-ledger"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F9",
+            "got": [],
+            "missed": [
+              "offline-pwa"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F10",
+            "got": [],
+            "missed": [
+              "secrets-from-env"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F11",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F12",
+            "got": [],
+            "missed": [
+              "money-minor-units"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F13",
+            "got": [
+              "append-only-ledger",
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": [
+              "append-only-ledger"
+            ]
+          },
+          {
+            "id": "F14",
+            "got": [],
+            "missed": [
+              "timestamped-migrations"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F15",
+            "got": [],
+            "missed": [
+              "append-only-ledger"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F16",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      },
+      "all": {
+        "relevant": 14,
+        "missed": 11,
+        "miss_rate": 0.786,
+        "returned": 5,
+        "false_pos": 2,
+        "fp_rate": 0.4,
+        "rows": [
+          {
+            "id": "F1",
+            "got": [],
+            "missed": [
+              "money-minor-units"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F2",
+            "got": [],
+            "missed": [
+              "atomic-write"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F3",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F4",
+            "got": [],
+            "missed": [
+              "tenant-row-level-security"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F5",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F6",
+            "got": [
+              "csv-import-dry-run",
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": [
+              "money-minor-units"
+            ]
+          },
+          {
+            "id": "F7",
+            "got": [],
+            "missed": [
+              "pure-core-cli-contract"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F8",
+            "got": [],
+            "missed": [
+              "hash-chained-log",
+              "append-only-ledger"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F9",
+            "got": [],
+            "missed": [
+              "offline-pwa"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F10",
+            "got": [],
+            "missed": [
+              "secrets-from-env"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F11",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F12",
+            "got": [],
+            "missed": [
+              "money-minor-units"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F13",
+            "got": [
+              "append-only-ledger",
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": [
+              "append-only-ledger"
+            ]
+          },
+          {
+            "id": "F14",
+            "got": [],
+            "missed": [
+              "timestamped-migrations"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F15",
+            "got": [],
+            "missed": [
+              "append-only-ledger"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F16",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      }
+    },
+    "bm25": {
+      "dev": {
+        "relevant": 4,
+        "missed": 1,
+        "miss_rate": 0.25,
+        "returned": 3,
+        "false_pos": 0,
+        "fp_rate": 0,
+        "rows": [
+          {
+            "id": "F1",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F2",
+            "got": [
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F3",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F4",
+            "got": [],
+            "missed": [
+              "tenant-row-level-security"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F5",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      },
+      "held": {
+        "relevant": 10,
+        "missed": 4,
+        "miss_rate": 0.4,
+        "returned": 6,
+        "false_pos": 0,
+        "fp_rate": 0,
+        "rows": [
+          {
+            "id": "F6",
+            "got": [
+              "csv-import-dry-run"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F7",
+            "got": [
+              "pure-core-cli-contract"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F8",
+            "got": [],
+            "missed": [
+              "hash-chained-log",
+              "append-only-ledger"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F9",
+            "got": [],
+            "missed": [
+              "offline-pwa"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F10",
+            "got": [
+              "secrets-from-env"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F11",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F12",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F13",
+            "got": [],
+            "missed": [
+              "atomic-write"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F14",
+            "got": [
+              "timestamped-migrations"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F15",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F16",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      },
+      "all": {
+        "relevant": 14,
+        "missed": 5,
+        "miss_rate": 0.357,
+        "returned": 9,
+        "false_pos": 0,
+        "fp_rate": 0,
+        "rows": [
+          {
+            "id": "F1",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F2",
+            "got": [
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F3",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F4",
+            "got": [],
+            "missed": [
+              "tenant-row-level-security"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F5",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F6",
+            "got": [
+              "csv-import-dry-run"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F7",
+            "got": [
+              "pure-core-cli-contract"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F8",
+            "got": [],
+            "missed": [
+              "hash-chained-log",
+              "append-only-ledger"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F9",
+            "got": [],
+            "missed": [
+              "offline-pwa"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F10",
+            "got": [
+              "secrets-from-env"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F11",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F12",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F13",
+            "got": [],
+            "missed": [
+              "atomic-write"
+            ],
+            "false_pos": []
+          },
+          {
+            "id": "F14",
+            "got": [
+              "timestamped-migrations"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F15",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F16",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      }
+    },
+    "llm_index": {
+      "dev": {
+        "relevant": 4,
+        "missed": 0,
+        "miss_rate": 0,
+        "returned": 4,
+        "false_pos": 0,
+        "fp_rate": 0,
+        "rows": [
+          {
+            "id": "F1",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F2",
+            "got": [
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F3",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F4",
+            "got": [
+              "tenant-row-level-security"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F5",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      },
+      "held": {
+        "relevant": 10,
+        "missed": 0,
+        "miss_rate": 0,
+        "returned": 10,
+        "false_pos": 0,
+        "fp_rate": 0,
+        "rows": [
+          {
+            "id": "F6",
+            "got": [
+              "csv-import-dry-run"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F7",
+            "got": [
+              "pure-core-cli-contract"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F8",
+            "got": [
+              "append-only-ledger",
+              "hash-chained-log"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F9",
+            "got": [
+              "offline-pwa"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F10",
+            "got": [
+              "secrets-from-env"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F11",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F12",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F13",
+            "got": [
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F14",
+            "got": [
+              "timestamped-migrations"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F15",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F16",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      },
+      "all": {
+        "relevant": 14,
+        "missed": 0,
+        "miss_rate": 0,
+        "returned": 14,
+        "false_pos": 0,
+        "fp_rate": 0,
+        "rows": [
+          {
+            "id": "F1",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F2",
+            "got": [
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F3",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F4",
+            "got": [
+              "tenant-row-level-security"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F5",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F6",
+            "got": [
+              "csv-import-dry-run"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F7",
+            "got": [
+              "pure-core-cli-contract"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F8",
+            "got": [
+              "append-only-ledger",
+              "hash-chained-log"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F9",
+            "got": [
+              "offline-pwa"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F10",
+            "got": [
+              "secrets-from-env"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F11",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F12",
+            "got": [
+              "money-minor-units"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F13",
+            "got": [
+              "atomic-write"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F14",
+            "got": [
+              "timestamped-migrations"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F15",
+            "got": [
+              "append-only-ledger"
+            ],
+            "missed": [],
+            "false_pos": []
+          },
+          {
+            "id": "F16",
+            "got": [],
+            "missed": [],
+            "false_pos": []
+          }
+        ]
+      }
+    }
+  }
+}

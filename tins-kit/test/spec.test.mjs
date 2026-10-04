@@ -30,7 +30,7 @@ test('intent diff: added / changed / removed rows', () => {
 test('scope rules', () => {
   assert.deepEqual(violations(['src/a.js', 'README.md'], ['src']), ['README.md']);
   assert.deepEqual(violations(['srcx/a.js'], ['src']), ['srcx/a.js'], 'prefix must be a path segment');
-  assert.deepEqual(violations(['tins.json', '.tins/kit/x', 'sessions/a.md', 'tasks/t.md', 'a'], null), ['tins.json', '.tins/kit/x', 'sessions/a.md', 'tasks/t.md']);
+  assert.deepEqual(violations(['tins.json', '.tins/kit/x', 'sessions/a.md', 'tasks/t.md', 'a', '.tins/patterns.lock'], null), ['tins.json', '.tins/kit/x', 'sessions/a.md', 'tasks/t.md']);
   assert.deepEqual(violations(['tins.json'], ['tins.json']), [], 'explicit grant');
   assert.deepEqual(violations(['src\\win.js'], ['src']), [], 'backslashes normalised');
   assert.ok(overlaps(['src/a'], ['src'])); assert.ok(!overlaps(['src/a'], ['src/b'])); assert.ok(overlaps(null, ['x']));
