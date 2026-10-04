@@ -21,8 +21,12 @@ export function runGate(root, { quiet = false } = {}) {
   const problems = existsSync(specPath) ? lintSpec(readFileSync(specPath, 'utf8'), root) : ['SPEC.md missing'];
   steps.push({ name: 'spec', ok: problems.length === 0 });
   for (const p of problems) say(`  spec: ${p}`);
+  // NODE_TEST_CONTEXT makes a nested `node --test` report to a parent and exit 0 even when tests
+  // fail (RF-7). A gate launched from inside any node:test process would silently pass. Strip it.
+  const env = { ...process.env, FORCE_COLOR: '0' };
+  for (const k of Object.keys(env)) if (k.startsWith('NODE_TEST_')) delete env[k];
   for (const cmd of cfg.gate) {
-    const r = spawnSync(cmd, { cwd: root, shell: true, encoding: 'utf8', timeout: (cfg.gate_timeout_s || 600) * 1000, env: { ...process.env, FORCE_COLOR: '0' } });
+    const r = spawnSync(cmd, { cwd: root, shell: true, encoding: 'utf8', timeout: (cfg.gate_timeout_s || 600) * 1000, env });
     const ok = r.status === 0;
     steps.push({ name: cmd, ok, code: r.status });
     if (!ok) {

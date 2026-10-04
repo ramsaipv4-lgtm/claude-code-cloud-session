@@ -11,7 +11,9 @@ const GIT_ENV = { GIT_AUTHOR_NAME: 'Test', GIT_AUTHOR_EMAIL: 't@example.invalid'
 Object.assign(process.env, GIT_ENV);
 
 export function sh(cmd, args, cwd, extra = {}) {
-  const r = spawnSync(cmd, args, { cwd, encoding: 'utf8', env: { ...process.env, ...GIT_ENV, ...extra } });
+  const env = { ...process.env, ...GIT_ENV };
+  for (const k of Object.keys(env)) if (k.startsWith('NODE_TEST_')) delete env[k]; // see RF-7
+  const r = spawnSync(cmd, args, { cwd, encoding: 'utf8', env: { ...env, ...extra } });
   return { code: r.status, out: (r.stdout || '') + (r.stderr || ''), stdout: r.stdout || '' };
 }
 export const git = (cwd, ...a) => { const r = sh('git', a, cwd); if (r.code) throw new Error(`git ${a.join(' ')}: ${r.out}`); return r.stdout.trim(); };
