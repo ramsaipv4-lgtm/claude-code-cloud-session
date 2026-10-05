@@ -192,3 +192,14 @@ Recovery used: reset the task branch to its base (soft), recommit inside one new
 re-cite the new code commit in the lesson. Candidate kit change: `abort` should strip its own
 trailers from the session's commits (tree-preserving rewrite, as close already does), or `close`
 should adopt commits whose trailer names an aborted session.
+
+### RF-28 [VERIFIED] Integration fixes need two sessions and a hand-edited task file
+Merging b7-2 (admin) after b7-4 (tele): each passed alone, the merged tree failed AC-169 because
+both groups had a screen a journey reaches as "schedule" (tins-lms `integration.md` I-2). The fix
+touched three tele files from the b7-2 branch. `kit start --paths` widened the *session* scope and
+`close` passed, but `kit merge` checks the *task* file (`tasks/<id>.md` on the target branch), so it
+refused twice ("… is outside task b7-2's paths"). What worked: a separate session on main that
+edits `tasks/b7-2.md` paths, then merge. Each refusal cost one full gate run (~15 min) because the
+scope check runs after the task-tree gate. Candidate kit changes: run the scope check before any
+gate; a `kit task widen <id> --paths …` command that records why; or an `integration` task type
+whose paths are the union of the two tasks it reconciles.
