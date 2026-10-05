@@ -183,3 +183,12 @@ every Read/Grep/Glob or shell read of a hidden test path becomes a `RULE` eviden
 journal must disclose, and affected tasks are excluded from the model comparison
 (tins-lms `docs/build-journal/AUDIT.md`). Prevention would need the suite to be unreadable from the
 builder's sandbox (a separate runner), which this environment does not offer.
+
+### RF-27 [VERIFIED] `kit abort` leaves commits that can never be recorded
+Task b6-8: the builder's first `close` refused (an out-of-scope edit), it then ran `abort` and a new
+session. Its earlier commits already carried the aborted session's `Session:` trailer, so the new
+session's close did not re-attribute them, and `kit merge` refused: "session 3be9545a: no record".
+Recovery used: reset the task branch to its base (soft), recommit inside one new session, and
+re-cite the new code commit in the lesson. Candidate kit change: `abort` should strip its own
+trailers from the session's commits (tree-preserving rewrite, as close already does), or `close`
+should adopt commits whose trailer names an aborted session.
