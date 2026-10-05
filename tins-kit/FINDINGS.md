@@ -224,3 +224,15 @@ clean") or, worse, a manual commit could have recorded an unverified tree. Recov
 --abort` by hand. Candidate kit change: build and gate the merged tree in a temporary worktree (as
 the task-tree check already does) and only then fast-forward or commit the target, so an
 interruption never touches it; plus a lock file so two merges cannot overlap.
+
+### RF-31 [VERIFIED] A worktree that links only the root node_modules builds against different versions
+tins-lms task worktrees symlink the main checkout's root `node_modules`. npm workspaces had hoisted
+React 18.3.1 (for Excalidraw) to the root and kept the pinned React 19.3.0 in
+`packages/web/node_modules`, which worktrees did not get. Every task worktree therefore built and
+tested the app on React 18; only main's checkout used React 19. It surfaced as a board crash that
+appeared only in `kit merge` (in place, in main's checkout): "Cannot read properties of null (reading
+'useRef')" — two Reacts. Fix in the project: link nested `packages/*/node_modules` too, and dedupe
+React in the bundler. Candidate kit change: `kit task new` should report when the dependency tree
+seen from the worktree differs from the main checkout's (e.g. compare `npm ls --all` hashes), and
+`kit merge` should gate in a temporary worktree prepared the same way as task worktrees (see RF-30),
+so "passes on the branch" and "passes on merge" test the same environment.
