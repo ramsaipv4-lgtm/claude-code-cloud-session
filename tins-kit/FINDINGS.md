@@ -203,3 +203,24 @@ edits `tasks/b7-2.md` paths, then merge. Each refusal cost one full gate run (~1
 scope check runs after the task-tree gate. Candidate kit changes: run the scope check before any
 gate; a `kit task widen <id> --paths …` command that records why; or an `integration` task type
 whose paths are the union of the two tasks it reconciles.
+
+### RF-29 [VERIFIED] Commits made outside a session block the merge late, and only a rewrite fixes them
+Tasks b7-5 and b7-7: the first (Haiku) builders committed with plain `git commit` after their
+sessions ended or were abandoned (7b78c86, 8aecf74, 0cbda77: no `Session:` trailer; one session never
+closed). Every gate passed, and closes by later builders passed, because `close` only heals trailers
+on commits made during the *current* session. The problem surfaced only at `kit merge` ("needs
+exactly one Session trailer (has 0)"), after a 10-minute task-tree gate. Recovery: rebuild the
+unpushed branch from the target with only the task's paths, commit in one new session, and repoint
+the course lesson's `source_refs` (the old commits disappear). Candidate kit changes: a
+`commit-msg`/`pre-commit` hook in task worktrees that refuses commits while no session is open;
+`kit status` (and `start`) warning about trailerless commits on the branch; and run the trailer
+check before the task-tree gate in `merge`.
+
+### RF-30 [VERIFIED] `kit merge` is not atomic: killing it mid-gate leaves the target mid-merge
+`merge` runs `git merge --no-commit` in the target checkout, then the gate, then commits or aborts.
+When the orchestrator's waiting job was killed by a tool time limit during that gate, main was left
+with MERGE_HEAD and a staged half-merge; the next merge would have refused ("working tree not
+clean") or, worse, a manual commit could have recorded an unverified tree. Recovery: `git merge
+--abort` by hand. Candidate kit change: build and gate the merged tree in a temporary worktree (as
+the task-tree check already does) and only then fast-forward or commit the target, so an
+interruption never touches it; plus a lock file so two merges cannot overlap.
