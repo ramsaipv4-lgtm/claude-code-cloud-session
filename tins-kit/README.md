@@ -88,3 +88,10 @@ Add any CLI agent as one line in `bench/agents.json`. Results and their limits a
 - From-scratch regeneration from SPEC.
 
 See `OPEN-QUESTIONS.md`.
+
+## Course generator (`skill-template/`)
+
+`tins-kit/skill-template/` is the course-package skill (v2.1) with three modes: `day` (teaching days from a
+syllabus), `case-study` (a micro-step course built from a codebase or build, as in the tins-lms rebuild course)
+and `dsa-patterns` (one lesson per problem-solving technique, solutions in Java and Python that the gate runs
+against their tests, UpNote-style PDF rendering). Start with `skill-template/SKILL.md`.
