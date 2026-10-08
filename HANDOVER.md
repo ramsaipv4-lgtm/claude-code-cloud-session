@@ -86,6 +86,12 @@ pointer train yard, type tower defense, git platformer) after your research.
 
 ## 5. Other open items
 
+- **Local test portability (fix first, as integration fix I-13):** `packages/web/test/{tele,board,foundation}.test.mjs`
+  look for Chromium in `/opt/pw-browsers` (the cloud path) and crash when it is missing (7 unit-test
+  failures on a fresh machine). Workaround: `sudo mkdir -p /opt/pw-browsers` (empty dir → Playwright's
+  default browser is used). Fix: fall back to `chromium.launch()` when the folder does not exist, like
+  `acceptance/lib/browser.mjs` already does.
+
 - **AC-145**: give a fresh agent only `course/` and see whether it can rebuild v1 (not run yet).
 - **Manual rows**: AC-118 (Android alarms, needs a phone build), AC-119 (DuckDNS renewal helper not
   built — README recommends Caddy instead).
