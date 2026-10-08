@@ -245,3 +245,14 @@ after `cat`/`grep`/… and never matched; only reads through the Read/Grep/Glob 
 So the v1 audit's hidden-test read counts (AUDIT.md, RF-26) are a **lower bound**. Found by the
 local orchestrator on 2026-10-08; fixed (and `acceptance/games` added to the pattern).
 Lesson: test the auditing tools themselves with a planted positive case before trusting a zero.
+
+### RF-33 [VERIFIED] Course citations made before `kit close` point at commits that close rewrites away
+
+BUILDER.md had builders commit, take `git rev-parse HEAD`, and cite that sha in the lesson's
+`source_refs` — before `kit close`. Close adds `Session:` trailers by rewriting the session's commits,
+so every cited sha survived only as a dangling object on the machine that made it. v1's course check
+passed in the cloud container (objects still there) and fails on every fresh clone (70 failures in
+36 of 42 steps). Found by the local orchestrator on 2026-10-08. Each old commit has a commit on main
+with an identical tree, so the citations map exactly (`handover/course-sha-map.txt`). Fix: cite
+commits reachable from main (after close / re-point before merge), and have the course check run in a
+fresh clone at merge time.

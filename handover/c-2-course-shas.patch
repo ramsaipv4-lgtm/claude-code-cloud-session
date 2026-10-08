@@ -1,0 +1,486 @@
+diff --git a/course/steps/ms-02.01/lesson.md b/course/steps/ms-02.01/lesson.md
+index 74766b4..6bb45fe 100644
+--- a/course/steps/ms-02.01/lesson.md
++++ b/course/steps/ms-02.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 5
+ skills: [seeded-rng, deterministic-shuffling]
+-source_refs: [{ path: packages/core/src/rng.ts, commit: ac0b476 }]
++source_refs: [{ path: packages/core/src/rng.ts, commit: c6dcc75 }]
+ next: ms-02.02
+ ---
+ 
+@@ -249,7 +249,7 @@ In Walkthrough section, showing excerpt with incomplete comments:
+ **What went wrong:**
+ - Excerpts tagged with file path are checked against the actual commit.
+ - Omitting comments or changing formatting causes mismatch.
+-- Gate output: `FAIL check 13: ms-02.01: excerpt from packages/core/src/rng.ts does not match ac0b476`.
++- Gate output: `FAIL check 13: ms-02.01: excerpt from packages/core/src/rng.ts does not match c6dcc75`.
+ 
+ **How you spot it:**
+ Gate checker validates line-for-line against the commit. Comments matter.
+@@ -258,7 +258,7 @@ Gate checker validates line-for-line against the commit. Comments matter.
+ Include all comments and match formatting exactly from the source file (e.g., empty lines between sections).
+ 
+ **Proof:**
+-After including full comments from `git show ac0b476:packages/core/src/rng.ts`, final gate PASS.
++After including full comments from `git show c6dcc75:packages/core/src/rng.ts`, final gate PASS.
+ 
+ ## Technical glossary
+ 
+diff --git a/course/steps/ms-02.03/lesson.md b/course/steps/ms-02.03/lesson.md
+index 849fad2..4eee5c6 100644
+--- a/course/steps/ms-02.03/lesson.md
++++ b/course/steps/ms-02.03/lesson.md
+@@ -7,7 +7,7 @@ prereqs: []
+ objectives: 3
+ new_terms: 4
+ skills: [catch-up-gate, mastery-tracking, study-group-formation]
+-source_refs: [{ path: packages/core/src/catchup.ts, commit: c0f99ad }, { path: packages/core/src/mastery.ts, commit: c0f99ad }]
++source_refs: [{ path: packages/core/src/catchup.ts, commit: 7133e33 }, { path: packages/core/src/mastery.ts, commit: 7133e33 }]
+ next: ms-02.04
+ ---
+ 
+diff --git a/course/steps/ms-03.01/lesson.md b/course/steps/ms-03.01/lesson.md
+index 06754ae..1dd453a 100644
+--- a/course/steps/ms-03.01/lesson.md
++++ b/course/steps/ms-03.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 6
+ skills: [hotp-codes, immutable-state, keyed-ids]
+-source_refs: [{ path: packages/core/src/attendance.ts, commit: 31ac940a3b80ae74f9b54663ff5bba3f816fcc26 }, { path: packages/core/src/pairing.ts, commit: 31ac940a3b80ae74f9b54663ff5bba3f816fcc26 }, { path: packages/core/src/certificate.ts, commit: 31ac940a3b80ae74f9b54663ff5bba3f816fcc26 }]
++source_refs: [{ path: packages/core/src/attendance.ts, commit: 034df0169289b58ff62c17820e852657b7005c23 }, { path: packages/core/src/pairing.ts, commit: 034df0169289b58ff62c17820e852657b7005c23 }, { path: packages/core/src/certificate.ts, commit: 034df0169289b58ff62c17820e852657b7005c23 }]
+ next: ms-03.02
+ ---
+ 
+diff --git a/course/steps/ms-03.02/lesson.md b/course/steps/ms-03.02/lesson.md
+index 8956ad2..554fbf8 100644
+--- a/course/steps/ms-03.02/lesson.md
++++ b/course/steps/ms-03.02/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 4
+ skills: [key-derivation, content-release]
+-source_refs: [{ path: packages/core/src/release.ts, commit: fadc0ff }]
++source_refs: [{ path: packages/core/src/release.ts, commit: 9d6ff57 }]
+ next: ms-03.03
+ ---
+ 
+diff --git a/course/steps/ms-03.03/lesson.md b/course/steps/ms-03.03/lesson.md
+index 94309b5..78bc546 100644
+--- a/course/steps/ms-03.03/lesson.md
++++ b/course/steps/ms-03.03/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 6
+ skills: [hash-chain, append-only-ledger]
+-source_refs: [{ path: packages/core/src/ledger.ts, commit: 94555fc188f43f2fb8f05f642211c26c213ed142 }]
++source_refs: [{ path: packages/core/src/ledger.ts, commit: f9c2d3522ba280621b766aba366a1420f9388e6b }]
+ next: ms-03.04
+ ---
+ 
+diff --git a/course/steps/ms-03.04/lesson.md b/course/steps/ms-03.04/lesson.md
+index eeed0ec..a307de5 100644
+--- a/course/steps/ms-03.04/lesson.md
++++ b/course/steps/ms-03.04/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 6
+ skills: [manifest, tar-ustar, ecdsa-signing]
+-source_refs: [{ path: packages/core/src/export.ts, commit: 415c2ebf29dc4d715fc607edc2b51a92c86f389f }]
++source_refs: [{ path: packages/core/src/export.ts, commit: 58260e330f0754b8e6d3f6104d42df3295822dff }]
+ next: ms-03.05
+ ---
+ 
+diff --git a/course/steps/ms-03.05/lesson.md b/course/steps/ms-03.05/lesson.md
+index 084cbec..4f89d81 100644
+--- a/course/steps/ms-03.05/lesson.md
++++ b/course/steps/ms-03.05/lesson.md
+@@ -7,7 +7,7 @@ prereqs: []
+ objectives: 3
+ new_terms: 5
+ skills: [recovery-key, crypto-shredding]
+-source_refs: [{ path: packages/core/src/keys.ts, commit: 3c4f923f66810152e55cb83088241066a64e62a0 }]
++source_refs: [{ path: packages/core/src/keys.ts, commit: 66fa9953a3ab20219834972b8c6377af5a2fc4c7 }]
+ next: ms-04.01
+ ---
+ 
+diff --git a/course/steps/ms-04.01/lesson.md b/course/steps/ms-04.01/lesson.md
+index a656eab..e636b01 100644
+--- a/course/steps/ms-04.01/lesson.md
++++ b/course/steps/ms-04.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: []
+ objectives: 3
+ new_terms: 4
+ skills: [teleprompter-pacing, script-parsing]
+-source_refs: [{ path: packages/core/src/pace.ts, commit: e345507 }]
++source_refs: [{ path: packages/core/src/pace.ts, commit: 9bfd6d2 }]
+ next: ms-04.02
+ ---
+ 
+diff --git a/course/steps/ms-04.02/lesson.md b/course/steps/ms-04.02/lesson.md
+index 7776901..21adb91 100644
+--- a/course/steps/ms-04.02/lesson.md
++++ b/course/steps/ms-04.02/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 5
+ skills: [pure-state-machines, seeded-choice, sla-status]
+-source_refs: [{ path: packages/core/src/shift.ts, commit: 8047257f1ef2de25ad02bfb3dd2f08cf2c0b1daa }]
++source_refs: [{ path: packages/core/src/shift.ts, commit: 41f4d5e870098f5be899de629e095362e9c38246 }]
+ next: ms-04.03
+ ---
+ 
+diff --git a/course/steps/ms-04.03/lesson.md b/course/steps/ms-04.03/lesson.md
+index d4ffcd3..b9403a3 100644
+--- a/course/steps/ms-04.03/lesson.md
++++ b/course/steps/ms-04.03/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-03.01]
+ objectives: 3
+ new_terms: 5
+ skills: [state-machines, immutable-state, policy-enforcement]
+-source_refs: [{ path: packages/core/src/appeal.ts, commit: 1f3fb653f01ebac843dc08e5ac4996d544077905 }, { path: packages/core/src/aipolicy.ts, commit: 1f3fb653f01ebac843dc08e5ac4996d544077905 }]
++source_refs: [{ path: packages/core/src/appeal.ts, commit: c891ff54f9c7a3d1e9b4bb5ca76b6ddb313184b4 }, { path: packages/core/src/aipolicy.ts, commit: c891ff54f9c7a3d1e9b4bb5ca76b6ddb313184b4 }]
+ next: ms-04.04
+ ---
+ 
+diff --git a/course/steps/ms-04.04/lesson.md b/course/steps/ms-04.04/lesson.md
+index 429e49b..cfb0a68 100644
+--- a/course/steps/ms-04.04/lesson.md
++++ b/course/steps/ms-04.04/lesson.md
+@@ -7,7 +7,7 @@ prereqs: []
+ objectives: 3
+ new_terms: 6
+ skills: [conflict-merge, property-testing]
+-source_refs: [{ path: packages/core/src/merge.ts, commit: 9047a570ed0755336df32b22e3e4a8a6b1c57c40 }]
++source_refs: [{ path: packages/core/src/merge.ts, commit: bfa5f40143ecb95b216ca6e4713b2184b46ab0d7 }]
+ next: ms-04.05
+ ---
+ 
+diff --git a/course/steps/ms-04.06/lesson.md b/course/steps/ms-04.06/lesson.md
+index ae1ea30..5519624 100644
+--- a/course/steps/ms-04.06/lesson.md
++++ b/course/steps/ms-04.06/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-04.05]
+ objectives: 4
+ new_terms: 8
+ skills: [ocr-parsing, text-similarity, statistical-analysis, clustering, scheduling]
+-source_refs: [{ path: packages/core/src/screenshot.ts, commit: cc0cbd7de02076991c810ef6aceacb31e5f4426d }, { path: packages/core/src/faq.ts, commit: cc0cbd7de02076991c810ef6aceacb31e5f4426d }, { path: packages/core/src/atrisk.ts, commit: cc0cbd7de02076991c810ef6aceacb31e5f4426d }, { path: packages/core/src/items.ts, commit: cc0cbd7de02076991c810ef6aceacb31e5f4426d }, { path: packages/core/src/cluster.ts, commit: cc0cbd7de02076991c810ef6aceacb31e5f4426d }, { path: packages/core/src/reflow.ts, commit: cc0cbd7de02076991c810ef6aceacb31e5f4426d }]
++source_refs: [{ path: packages/core/src/screenshot.ts, commit: 60f4f7affe6351b64d2db6f7236e793c97f285d1 }, { path: packages/core/src/faq.ts, commit: 60f4f7affe6351b64d2db6f7236e793c97f285d1 }, { path: packages/core/src/atrisk.ts, commit: 60f4f7affe6351b64d2db6f7236e793c97f285d1 }, { path: packages/core/src/items.ts, commit: 60f4f7affe6351b64d2db6f7236e793c97f285d1 }, { path: packages/core/src/cluster.ts, commit: 60f4f7affe6351b64d2db6f7236e793c97f285d1 }, { path: packages/core/src/reflow.ts, commit: 60f4f7affe6351b64d2db6f7236e793c97f285d1 }]
+ next: ms-04.07
+ ---
+ 
+diff --git a/course/steps/ms-05.01/lesson.md b/course/steps/ms-05.01/lesson.md
+index d612abf..f78e96e 100644
+--- a/course/steps/ms-05.01/lesson.md
++++ b/course/steps/ms-05.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-02.04]
+ objectives: 3
+ new_terms: 6
+ skills: [content-validation, layout-tolerant-parsing, expiring-waivers]
+-source_refs: [{ path: packages/core/src/gate.ts, commit: 0d69d2fe3e0bb1525f66b2624049bedb6679e7a6 }]
++source_refs: [{ path: packages/core/src/gate.ts, commit: eda118158b99415260721684767a8cbde068b8e4 }]
+ next: ms-06.01
+ ---
+ 
+diff --git a/course/steps/ms-06.01/lesson.md b/course/steps/ms-06.01/lesson.md
+index ffe5f9c..3f1de8c 100644
+--- a/course/steps/ms-06.01/lesson.md
++++ b/course/steps/ms-06.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: []
+ objectives: 3
+ new_terms: 6
+ skills: [http-server-foundation, role-guard, test-mode-gating]
+-source_refs: [{ path: packages/server/src/core/guard.ts, commit: 8364ba6 }, { path: packages/server/src/core/store.ts, commit: 8364ba6 }, { path: packages/server/src/core/http.ts, commit: 8364ba6 }]
++source_refs: [{ path: packages/server/src/core/guard.ts, commit: ed94c17 }, { path: packages/server/src/core/store.ts, commit: ed94c17 }, { path: packages/server/src/core/http.ts, commit: ed94c17 }]
+ next: ms-06.02
+ ---
+ 
+diff --git a/course/steps/ms-06.02/lesson.md b/course/steps/ms-06.02/lesson.md
+index 72c083a..aad23c4 100644
+--- a/course/steps/ms-06.02/lesson.md
++++ b/course/steps/ms-06.02/lesson.md
+@@ -7,7 +7,7 @@ prereqs: []
+ objectives: 3
+ new_terms: 6
+ skills: [one-time-codes, device-revocation, rotating-code-verification]
+-source_refs: [{ path: packages/server/src/routes/pairing.ts, commit: 8970f8bb537d9814580216136512c2c5c0fdf66a }, { path: packages/server/src/routes/attendance.ts, commit: 8970f8bb537d9814580216136512c2c5c0fdf66a }]
++source_refs: [{ path: packages/server/src/routes/pairing.ts, commit: 312779eda358ffd7f4f94db3523222c20fdce77d }, { path: packages/server/src/routes/attendance.ts, commit: 312779eda358ffd7f4f94db3523222c20fdce77d }]
+ next: ms-06.03
+ ---
+ 
+diff --git a/course/steps/ms-06.03/lesson.md b/course/steps/ms-06.03/lesson.md
+index 551b501..24a860f 100644
+--- a/course/steps/ms-06.03/lesson.md
++++ b/course/steps/ms-06.03/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-06.01]
+ objectives: 3
+ new_terms: 5
+ skills: [content-gate, sealed-sections, debugging-by-observation]
+-source_refs: [{ path: packages/server/src/routes/content.ts, commit: 9983740 }]
++source_refs: [{ path: packages/server/src/routes/content.ts, commit: a18ee86 }]
+ next: ms-06.04
+ ---
+ 
+diff --git a/course/steps/ms-06.04/lesson.md b/course/steps/ms-06.04/lesson.md
+index aa83cc6..7bd5314 100644
+--- a/course/steps/ms-06.04/lesson.md
++++ b/course/steps/ms-06.04/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-06.01]
+ objectives: 3
+ new_terms: 6
+ skills: [replication-guards, conflict-merge-pass, encrypted-document-rules]
+-source_refs: [{ path: packages/server/src/routes/sync.ts, commit: 99983ce }]
++source_refs: [{ path: packages/server/src/routes/sync.ts, commit: 194bf54 }]
+ next: ms-06.05
+ ---
+ 
+diff --git a/course/steps/ms-06.05/lesson.md b/course/steps/ms-06.05/lesson.md
+index 3aaa49e..e5361dc 100644
+--- a/course/steps/ms-06.05/lesson.md
++++ b/course/steps/ms-06.05/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-06.01]
+ objectives: 3
+ new_terms: 5
+ skills: [append-only-ledger, appeal-window, evidence-pack]
+-source_refs: [{ path: packages/server/src/routes/grading.ts, commit: 05dcdea }]
++source_refs: [{ path: packages/server/src/routes/grading.ts, commit: b3d6bff }]
+ next: ms-06.06
+ ---
+ 
+diff --git a/course/steps/ms-06.06/lesson.md b/course/steps/ms-06.06/lesson.md
+index fe2ef3d..3fc854a 100644
+--- a/course/steps/ms-06.06/lesson.md
++++ b/course/steps/ms-06.06/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-06.01]
+ objectives: 4
+ new_terms: 6
+ skills: [export-manifest, signed-package, device-key, secret-scrubbing]
+-source_refs: [{ path: packages/server/src/routes/export.ts, commit: adbf74e }]
++source_refs: [{ path: packages/server/src/routes/export.ts, commit: 201e07e }]
+ next: ms-06.08
+ ---
+ 
+diff --git a/course/steps/ms-06.08/lesson.md b/course/steps/ms-06.08/lesson.md
+index 4e3687d..71fd41f 100644
+--- a/course/steps/ms-06.08/lesson.md
++++ b/course/steps/ms-06.08/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-06.01]
+ objectives: 4
+ new_terms: 6
+ skills: [webauthn, challenge-response, ecdsa-verify, session-cookie]
+-source_refs: [{ path: packages/server/src/routes/accounts.ts, commit: c791c7e }]
++source_refs: [{ path: packages/server/src/routes/accounts.ts, commit: 2dde7df }]
+ next: ms-07.01
+ ---
+ 
+diff --git a/course/steps/ms-07.01/lesson.md b/course/steps/ms-07.01/lesson.md
+index 7538ddc..548b5e5 100644
+--- a/course/steps/ms-07.01/lesson.md
++++ b/course/steps/ms-07.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: []
+ objectives: 3
+ new_terms: 6
+ skills: [web-shell, feature-registry, pseudo-locale]
+-source_refs: [{ path: packages/web/src/features/registry.ts, commit: 9c21b82 }, { path: packages/web/src/strings/index.ts, commit: 9c21b82 }]
++source_refs: [{ path: packages/web/src/features/registry.ts, commit: c812c46 }, { path: packages/web/src/strings/index.ts, commit: c812c46 }]
+ next: ms-07.02
+ ---
+ 
+diff --git a/course/steps/ms-07.02/lesson.md b/course/steps/ms-07.02/lesson.md
+index cc9a4f1..8063706 100644
+--- a/course/steps/ms-07.02/lesson.md
++++ b/course/steps/ms-07.02/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 5
+ skills: [admin-screens, rule-based-draft, feature-switches]
+-source_refs: [{ path: packages/server/src/routes/features/admin.ts, commit: 58abe2b }]
++source_refs: [{ path: packages/server/src/routes/features/admin.ts, commit: d737943 }]
+ next: ms-07.03
+ ---
+ 
+diff --git a/course/steps/ms-07.03/lesson.md b/course/steps/ms-07.03/lesson.md
+index 3591f3d..caa241c 100644
+--- a/course/steps/ms-07.03/lesson.md
++++ b/course/steps/ms-07.03/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 5
+ skills: [feature-group, private-data, core-reuse]
+-source_refs: [{ path: packages/server/src/routes/features/attend.ts, commit: 345b595 }, { path: packages/web/src/features/attend/wa.ts, commit: 345b595 }]
++source_refs: [{ path: packages/server/src/routes/features/attend.ts, commit: d7f5f15 }, { path: packages/web/src/features/attend/wa.ts, commit: d7f5f15 }]
+ next: ms-07.04
+ ---
+ 
+diff --git a/course/steps/ms-07.04/lesson.md b/course/steps/ms-07.04/lesson.md
+index 64720c0..92adc1e 100644
+--- a/course/steps/ms-07.04/lesson.md
++++ b/course/steps/ms-07.04/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 6
+ skills: [polling, sealed-sections, pacing]
+-source_refs: [{ path: packages/web/src/features/tele/Today.tsx, commit: 940e3ba61a07d3cda1f43a9691593b623e066dbb }, { path: packages/web/src/features/tele/Prompter.tsx, commit: 940e3ba61a07d3cda1f43a9691593b623e066dbb }]
++source_refs: [{ path: packages/web/src/features/tele/Today.tsx, commit: 8d9e317f23e192b2f01bf711a517805f3f30010d }, { path: packages/web/src/features/tele/Prompter.tsx, commit: 8d9e317f23e192b2f01bf711a517805f3f30010d }]
+ next: ms-07.05
+ ---
+ 
+diff --git a/course/steps/ms-07.05/lesson.md b/course/steps/ms-07.05/lesson.md
+index 7e11da8..80bf11f 100644
+--- a/course/steps/ms-07.05/lesson.md
++++ b/course/steps/ms-07.05/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 5
+ skills: [feature-group, core-reuse, test-contract]
+-source_refs: [{ path: packages/server/src/routes/features/learn.ts, commit: b498335 }, { path: packages/web/src/features/learn/index.tsx, commit: b498335 }]
++source_refs: [{ path: packages/server/src/routes/features/learn.ts, commit: a142ead }, { path: packages/web/src/features/learn/index.tsx, commit: a142ead }]
+ next: ms-07.06
+ ---
+ 
+diff --git a/course/steps/ms-07.06/lesson.md b/course/steps/ms-07.06/lesson.md
+index 9211e87..818122f 100644
+--- a/course/steps/ms-07.06/lesson.md
++++ b/course/steps/ms-07.06/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-02.01]
+ objectives: 3
+ new_terms: 6
+ skills: [shift-engine, server-clock, ui-contracts]
+-source_refs: [{ path: packages/web/src/features/shift/Shift.tsx, commit: a733c14 }, { path: packages/server/src/routes/features/shift.ts, commit: a733c14 }]
++source_refs: [{ path: packages/web/src/features/shift/Shift.tsx, commit: 3bec664 }, { path: packages/server/src/routes/features/shift.ts, commit: 3bec664 }]
+ next: ms-07.07
+ ---
+ 
+diff --git a/course/steps/ms-07.07/lesson.md b/course/steps/ms-07.07/lesson.md
+index 66be8b3..0fc9781 100644
+--- a/course/steps/ms-07.07/lesson.md
++++ b/course/steps/ms-07.07/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 5
+ skills: [feature-group, journey-contract, core-reuse]
+-source_refs: [{ path: packages/server/src/routes/features/classroom.ts, commit: 6058927 }]
++source_refs: [{ path: packages/server/src/routes/features/classroom.ts, commit: 7eabd28 }]
+ next: ms-07.08
+ ---
+ 
+diff --git a/course/steps/ms-07.09/lesson.md b/course/steps/ms-07.09/lesson.md
+index 89ffc76..128dd7d 100644
+--- a/course/steps/ms-07.09/lesson.md
++++ b/course/steps/ms-07.09/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 6
+ skills: [offline-first, replication, signed-files]
+-source_refs: [{ path: packages/web/src/features/files/phone.ts, commit: c4117568b905055221763675551bc228d8055749 }, { path: packages/web/src/features/files/net.ts, commit: c4117568b905055221763675551bc228d8055749 }]
++source_refs: [{ path: packages/web/src/features/files/phone.ts, commit: a905a3402f24a191fc7984ab74d248a5ac00d346 }, { path: packages/web/src/features/files/net.ts, commit: a905a3402f24a191fc7984ab74d248a5ac00d346 }]
+ next: ms-08.01
+ ---
+ 
+diff --git a/course/steps/ms-08.01/lesson.md b/course/steps/ms-08.01/lesson.md
+index f3a01a0..824f78a 100644
+--- a/course/steps/ms-08.01/lesson.md
++++ b/course/steps/ms-08.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 6
+ skills: [lazy-loading, wrapper-over-library, file-formats]
+-source_refs: [{ path: packages/board/src/pdf.ts, commit: 4505e3f }, { path: packages/board/src/BoardCanvas.tsx, commit: 4505e3f }, { path: packages/web/src/features/board/index.tsx, commit: 4505e3f }, { path: packages/server/src/routes/features/board.ts, commit: 4505e3f }]
++source_refs: [{ path: packages/board/src/pdf.ts, commit: 02e7f5a }, { path: packages/board/src/BoardCanvas.tsx, commit: 02e7f5a }, { path: packages/web/src/features/board/index.tsx, commit: 02e7f5a }, { path: packages/server/src/routes/features/board.ts, commit: 02e7f5a }]
+ next: ms-09.01
+ ---
+ 
+diff --git a/course/steps/ms-09.01/lesson.md b/course/steps/ms-09.01/lesson.md
+index 9926252..95d470e 100644
+--- a/course/steps/ms-09.01/lesson.md
++++ b/course/steps/ms-09.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 6
+ skills: [load-testing, percentiles, test-mode-hubs]
+-source_refs: [{ path: packages/cli/src/loadtest.ts, commit: 5099bad50419a4f7e9d6ab828e8257c18b8852fa }, { path: packages/cli/src/stats.ts, commit: 5099bad50419a4f7e9d6ab828e8257c18b8852fa }]
++source_refs: [{ path: packages/cli/src/loadtest.ts, commit: c267a25faf00fbe81211f568e7811790d0bee7a0 }, { path: packages/cli/src/stats.ts, commit: c267a25faf00fbe81211f568e7811790d0bee7a0 }]
+ next: ms-10.01
+ ---
+ 
+diff --git a/course/steps/ms-10.01/lesson.md b/course/steps/ms-10.01/lesson.md
+index 39ddf1b..2e0b463 100644
+--- a/course/steps/ms-10.01/lesson.md
++++ b/course/steps/ms-10.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 6
+ skills: [fetch-adapters, fake-servers, secret-scan]
+-source_refs: [{ path: packages/adapters/src/github.ts, commit: 3befeb0ceddb2ff1c6c67be57b7bbade18b61375 }, { path: packages/adapters/src/forgejo.ts, commit: 3befeb0ceddb2ff1c6c67be57b7bbade18b61375 }]
++source_refs: [{ path: packages/adapters/src/github.ts, commit: 08b1415f0ae6cca6fe9992219c7d72a449ceca5d }, { path: packages/adapters/src/forgejo.ts, commit: 08b1415f0ae6cca6fe9992219c7d72a449ceca5d }]
+ next: ms-10.02
+ ---
+ 
+diff --git a/course/steps/ms-10.02/lesson.md b/course/steps/ms-10.02/lesson.md
+index fa4ce28..682c5f8 100644
+--- a/course/steps/ms-10.02/lesson.md
++++ b/course/steps/ms-10.02/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-09.01]
+ objectives: 4
+ new_terms: 6
+ skills: []
+-source_refs: [{ path: packages/adapters/src/backup.ts, commit: 2dec128 }, { path: packages/adapters/src/google.ts, commit: 2dec128 }]
++source_refs: [{ path: packages/adapters/src/backup.ts, commit: f30e926 }, { path: packages/adapters/src/google.ts, commit: f30e926 }]
+ next: ms-10.03
+ ---
+ 
+diff --git a/course/steps/ms-10.03/lesson.md b/course/steps/ms-10.03/lesson.md
+index 22e7462..d0c96fb 100644
+--- a/course/steps/ms-10.03/lesson.md
++++ b/course/steps/ms-10.03/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 3
+ new_terms: 4
+ skills: [health-monitoring, offline-first, async-iteration]
+-source_refs: [{ path: packages/adapters/src/health.ts, commit: c6653dd7722af186c248f1a0287b482b06e3bd4a }]
++source_refs: [{ path: packages/adapters/src/health.ts, commit: 289bacb8cbe05cf98d5c13ae63ed30b17cd43928 }]
+ next: ms-11.01
+ ---
+ 
+diff --git a/course/steps/ms-11.01/lesson.md b/course/steps/ms-11.01/lesson.md
+index 3118d64..7610a4a 100644
+--- a/course/steps/ms-11.01/lesson.md
++++ b/course/steps/ms-11.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-01.01]
+ objectives: 4
+ new_terms: 6
+ skills: [integration-testing, regex, http-caching, json-rpc, least-privilege]
+-source_refs: [{ path: packages/server/src/core/guard.ts, commit: e47e1f069f4befedd67447740e6bf2f34660ac40 }, { path: packages/server/src/routes/content.ts, commit: e47e1f069f4befedd67447740e6bf2f34660ac40 }, { path: packages/server/src/routes/attendance.ts, commit: e47e1f069f4befedd67447740e6bf2f34660ac40 }, { path: packages/server/src/routes/grading.ts, commit: e47e1f069f4befedd67447740e6bf2f34660ac40 }, { path: packages/server/src/routes/mcp.ts, commit: e47e1f069f4befedd67447740e6bf2f34660ac40 }, { path: packages/server/src/core/static.ts, commit: e47e1f069f4befedd67447740e6bf2f34660ac40 }]
++source_refs: [{ path: packages/server/src/core/guard.ts, commit: 2bfb8c35321f61536ae16b0013c3c9e737d5da08 }, { path: packages/server/src/routes/content.ts, commit: 2bfb8c35321f61536ae16b0013c3c9e737d5da08 }, { path: packages/server/src/routes/attendance.ts, commit: 2bfb8c35321f61536ae16b0013c3c9e737d5da08 }, { path: packages/server/src/routes/grading.ts, commit: 2bfb8c35321f61536ae16b0013c3c9e737d5da08 }, { path: packages/server/src/routes/mcp.ts, commit: 2bfb8c35321f61536ae16b0013c3c9e737d5da08 }, { path: packages/server/src/core/static.ts, commit: 2bfb8c35321f61536ae16b0013c3c9e737d5da08 }]
+ next: ms-11.02
+ ---
+ 
+diff --git a/course/steps/ms-11.02/lesson.md b/course/steps/ms-11.02/lesson.md
+index 8c415d9..95c3d6d 100644
+--- a/course/steps/ms-11.02/lesson.md
++++ b/course/steps/ms-11.02/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-07.01]
+ objectives: 3
+ new_terms: 5
+ skills: [shell-hooks, nav-contract, service-worker]
+-source_refs: [{ path: packages/web/src/app/nav.ts, commit: 234f30a }, { path: packages/web/src/sw.ts, commit: 234f30a }]
++source_refs: [{ path: packages/web/src/app/nav.ts, commit: 16f5a70 }, { path: packages/web/src/sw.ts, commit: 16f5a70 }]
+ next: ms-12.01
+ ---
+ 
+diff --git a/course/steps/ms-12.01/lesson.md b/course/steps/ms-12.01/lesson.md
+index d4eff43..615f253 100644
+--- a/course/steps/ms-12.01/lesson.md
++++ b/course/steps/ms-12.01/lesson.md
+@@ -7,7 +7,7 @@ prereqs: [ms-11.01]
+ objectives: 4
+ new_terms: 6
+ skills: [state-ownership, race-conditions, performance-profiling, dropped-input]
+-source_refs: [{ path: packages/server/src/routes/features/shift.ts, commit: 53ae25f0b92304507461ab3b34805baed308d562 }, { path: packages/web/src/features/shift/Shift.tsx, commit: 53ae25f0b92304507461ab3b34805baed308d562 }, { path: packages/web/src/features/coach/lib.ts, commit: 53ae25f0b92304507461ab3b34805baed308d562 }, { path: packages/web/src/features/coach/Shot.tsx, commit: 53ae25f0b92304507461ab3b34805baed308d562 }, { path: packages/web/src/features/coach/Gate.tsx, commit: 53ae25f0b92304507461ab3b34805baed308d562 }]
++source_refs: [{ path: packages/server/src/routes/features/shift.ts, commit: 61ddca6a0886101f7094bb3df8a5b4fea31fe1b8 }, { path: packages/web/src/features/shift/Shift.tsx, commit: 61ddca6a0886101f7094bb3df8a5b4fea31fe1b8 }, { path: packages/web/src/features/coach/lib.ts, commit: 61ddca6a0886101f7094bb3df8a5b4fea31fe1b8 }, { path: packages/web/src/features/coach/Shot.tsx, commit: 61ddca6a0886101f7094bb3df8a5b4fea31fe1b8 }, { path: packages/web/src/features/coach/Gate.tsx, commit: 61ddca6a0886101f7094bb3df8a5b4fea31fe1b8 }]
+ next: end
+ ---
+ 

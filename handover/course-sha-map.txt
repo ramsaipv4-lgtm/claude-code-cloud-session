@@ -1,0 +1,44 @@
+# old cited sha -> commit on tins-lms main with the IDENTICAL tree (same files byte for byte) -> subject of the old commit
+# Produced in the cloud container, which still had the pre-close commits. Verified: on a fresh clone, course check 70 failures -> 'all checks pass' after applying.
+05dcdea b3d6bff63535a71d1246ebef594a6fc9437c8959 b6-5: code
+0d69d2fe3e0bb1525f66b2624049bedb6679e7a6 eda118158b99415260721684767a8cbde068b8e4 b5-1: code
+17a9b8d70d9ccfd728f6f0d1e0cd9cbee497fe15 17a9b8d70d9ccfd728f6f0d1e0cd9cbee497fe15 b7-8: code
+1f3fb653f01ebac843dc08e5ac4996d544077905 c891ff54f9c7a3d1e9b4bb5ca76b6ddb313184b4 b4-3: code
+234f30a 16f5a702a1c3648a9cf7d54af277698b1a6d576b b11-2: web shell integration, re-recorded from main
+2dec128 f30e926b8d87f82dd58bafa6438bc67b81dcbd88 b10-2: Backup encryption and Google adapters
+31ac940a3b80ae74f9b54663ff5bba3f816fcc26 034df0169289b58ff62c17820e852657b7005c23 b3-1: code
+345b595 d7f5f15ec78b96c0a244478da80f3953835c03bc b7-3: code
+3befeb0ceddb2ff1c6c67be57b7bbade18b61375 08b1415f0ae6cca6fe9992219c7d72a449ceca5d b10-1: code
+3c4f923f66810152e55cb83088241066a64e62a0 66fa9953a3ab20219834972b8c6377af5a2fc4c7 b3-5: code
+415c2ebf29dc4d715fc607edc2b51a92c86f389f 58260e330f0754b8e6d3f6104d42df3295822dff b3-4: code
+4505e3f 02e7f5af3fbb366fba37dc3b66c7612cdcc2dd71 b8-1: board (wrapper over Excalidraw 0.18.1), re-recorded from main; AC-97 only
+5099bad50419a4f7e9d6ab828e8257c18b8852fa c267a25faf00fbe81211f568e7811790d0bee7a0 b9-1: perf budgets and 200-learner load test CLI, re-recorded from main; AC-100, AC-103
+53ae25f0b92304507461ab3b34805baed308d562 61ddca6a0886101f7094bb3df8a5b4fea31fe1b8 b12-1: code
+58abe2b d737943cc50586937e214daa86d5d480f2c7aeea b7-2: code
+6058927 7eabd284dfa107808744e1bd329e4b79000bf9ee b7-7: classroom server routes, index and strings (completes the re-recorded tree)
+639065e 639065e9cfe5996e8859a1e5a786b290d2cd0c67 b2-2: implement newCard, reviewCard, dueCards, spreadBacklog
+739e38c 739e38c150c4a0a8f2e62bad0ef91aecfe4dc4bb b4-7: Drop plan, retention, messages
+8047257f1ef2de25ad02bfb3dd2f08cf2c0b1daa 41f4d5e870098f5be899de629e095362e9c38246 b4-2: code
+8290dbd5bd95da0511fef6ea91a643825ca0e6b9 8290dbd5bd95da0511fef6ea91a643825ca0e6b9 tins: uncommitted work at close
+8364ba6 ed94c17400ca386e548f923cbac7b6e6a148ba12 b6-1: code
+8970f8bb537d9814580216136512c2c5c0fdf66a 312779eda358ffd7f4f94db3523222c20fdce77d b6-2: code
+9047a570ed0755336df32b22e3e4a8a6b1c57c40 bfa5f40143ecb95b216ca6e4713b2184b46ab0d7 b4-4: code
+940e3ba61a07d3cda1f43a9691593b623e066dbb 8d9e317f23e192b2f01bf711a517805f3f30010d b7-4: code
+94555fc188f43f2fb8f05f642211c26c213ed142 f9c2d3522ba280621b766aba366a1420f9388e6b b3-3: code
+9983740 a18ee86dfdd8d4f70fd85e11a71e2fe305843dab b6-3: code
+99983ce 194bf54c54a91f6a66dfae1074eab11808483d2b b6-4: code
+9c21b82 c812c464d2fb80576fd9e695d14b8caf52d2f856 b7-1: code
+a733c14 3bec664dbdeade90e2ab544d3e2be584111a8c40 b7-6: shift, rituals, corporate practice, peer review, forge; re-recorded from main
+ac0b476 c6dcc7574cde65bd7635013a0c02961cd25d7026 b2-1: Seeded randomness implementation
+adbf74e 201e07eda462f25b8aa7061e8110c42f15b6e798 b6-6: code
+b498335 a142ead3bee71bfaa3ab5861cedffa0da3b32372 b7-5: learner day (Haiku attempt + Sonnet takeover), re-recorded from main
+bb6614112b654cb00aafed4aef9307b851f687d8 bb6614112b654cb00aafed4aef9307b851f687d8 tins: uncommitted work at close
+c0f99ad 7133e3355c5bc48981980dcc36c0b93292dfac27 b2-3: implement catch-up gate and mastery map
+c4117568b905055221763675551bc228d8055749 a905a3402f24a191fc7984ab74d248a5ac00d346 b7-9: code
+c5b7bff c5b7bff672f9caaf73a3fcb60a99ae9fd12c440c tins: uncommitted work at close
+c6653dd7722af186c248f1a0287b482b06e3bd4a 289bacb8cbe05cf98d5c13ae63ed30b17cd43928 b10-3: health digest and morning checklist
+c791c7e 2dde7df4066d776b9ba055fddfb49e26365e3e0e b6-8: code (re-recorded after an aborted session; see journal)
+cc0cbd7de02076991c810ef6aceacb31e5f4426d 60f4f7affe6351b64d2db6f7236e793c97f285d1 b4-6: implement screenshot rules, FAQ, at-risk, item analysis, clusters, re-flow
+e345507 9bfd6d2d305d697d651c2c6e35f3d21e35280da5 Fix pace() and scriptTotalSec() implementation
+e47e1f069f4befedd67447740e6bf2f34660ac40 2bfb8c35321f61536ae16b0013c3c9e737d5da08 b11-1: code
+fadc0ff 9d6ff57a6bc4c089c1ff9fba9f08fd63170efd96 b3-2: code
