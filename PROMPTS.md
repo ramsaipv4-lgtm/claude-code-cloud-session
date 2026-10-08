@@ -75,6 +75,22 @@ YOUR JOB
   frames. Report to me faithfully, including failures.
 - Keep CONTINUE.md current with every push.
 
+GIT
+- Before `kit task new`, `kit start`, a merge, or any push: `git fetch origin` and bring main up to
+  date with `git pull --no-rebase origin main` (a merge, never a rebase: kit records commit hashes
+  in sessions/, and rewriting them breaks `kit check`). Same in tins-lms-tests before reading tests.
+- Never force-push, never rewrite pushed history, never push from a builder's worktree (only main
+  and task branches, from here).
+- Builders never pull or merge main themselves; when a task branch needs main's changes, sync it
+  inside a session as CONTINUE.md step 4 says.
+- First thing: check that origin/main contains the commit "tins: close session dd27364e"
+  (the games-spec session from the cloud). If it is missing, tell me before committing to main.
+
+SPEC
+- SPEC-games.md is a separate file only for now. The gate and kit read SPEC.md alone, so the games
+  are not part of the contract until step 2 below folds them into SPEC.md. Until then, treat
+  SPEC-games.md as the approved design, and do not start game builders.
+
 ORDER OF WORK
 1. Demo videos: finish branch task/d-1 as HANDOVER.md §3 says (new task d-2, carry the files over,
    re-record, check phone frames at full size, merge). Send me the index and where the mp4s are.
@@ -119,7 +135,9 @@ Tests interact only through what the SPEC defines: routes, data-testid / accessi
 `window.__game` (test mode only), CLI commands, and the exported Snek API. Where the SPEC is
 ambiguous, do not guess: list the question for me and leave that assertion out.
 Rules: never write a real credential; deterministic (seeds, test clock); no network beyond the
-local hub; keep each journey under 3 minutes. Run `node --check` on every file. Commit in
+local hub; keep each journey under 3 minutes. Run `git pull --no-rebase` in both repos before you
+start and before you push; never force-push. Note: SPEC-games.md will later be folded into SPEC.md
+as §13 with the same ids, so refer to rows by id (AC-2xx), not by file section. Run `node --check` on every file. Commit in
 tins-lms-tests with clear messages and push to main. Final report: files, rows covered, open
 questions.
 ```
