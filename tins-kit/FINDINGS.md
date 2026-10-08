@@ -255,4 +255,6 @@ passed in the cloud container (objects still there) and fails on every fresh clo
 36 of 42 steps). Found by the local orchestrator on 2026-10-08. Each old commit has a commit on main
 with an identical tree, so the citations map exactly (`handover/course-sha-map.txt`). Fix: cite
 commits reachable from main (after close / re-point before merge), and have the course check run in a
-fresh clone at merge time.
+fresh clone at merge time. Applied in tins-lms task c-2 (sha-only diff, fresh-clone check passes). Two
+citations resolve to "tins: uncommitted work at close" commits rather than the builder's code commit:
+same tree, so the excerpts match; cosmetic. Matching by tree identity is what made the remap exact.
