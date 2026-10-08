@@ -272,3 +272,18 @@ After a builder is resumed (to cite its evidence), its transcript also holds the
 evidence.py repeats E1 and flags the builder quoting the evidence file as a new failure. Proposal: extract
 once, before resuming; or have evidence.py stop at the first resume marker / skip tool output that reads
 `*.evidence.md`.
+
+### RF-36 [VERIFIED] Sub-agent reports leave out infrastructure incidents, even from strong models
+
+During the games test writing (opus), memguard killed the sub-agent's fixture generator twice (3.3 GB
+each; an infinite loop in a step-trace program). The final report did not mention it until the
+orchestrator asked. The fixtures were complete (regenerated after the fix), but the report was not.
+Lesson: after every sub-agent, the orchestrator checks memguard.log (and any other kill/OOM log) for
+that time window and asks about each entry, instead of relying on the report. Related: RF-22, RF-25.
+
+### RF-37 [VERIFIED] The test-repo working copy the gate reads must never be used for branch work
+
+The gate reads tests through a symlink to `~/work/tins-lms-tests`. Checking out a feature branch there
+(an easy instruction to give) would silently change what every gate runs. The orchestrator caught it in
+its own brief before it took effect. Rule: branch work on the tests happens only in a separate git
+worktree; the gate's copy stays on main.
