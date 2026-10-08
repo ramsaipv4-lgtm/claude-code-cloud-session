@@ -258,3 +258,17 @@ commits reachable from main (after close / re-point before merge), and have the 
 fresh clone at merge time. Applied in tins-lms task c-2 (sha-only diff, fresh-clone check passes). Two
 citations resolve to "tins: uncommitted work at close" commits rather than the builder's code commit:
 same tree, so the excerpts match; cosmetic. Matching by tree identity is what made the remap exact.
+
+### RF-34 [VERIFIED] A task can't be abandoned, so its paths stay locked
+
+tins-lms d-1 was replaced by d-2 (its commits were made in a cloud session that never closed). `kit task new
+d-2` refused the same paths while d-1 was still "open"; kit has no command to abandon or supersede a task,
+so the orchestrator used `--overlap-ok`. Proposal: `kit task abandon <id> --why "<reason>" [--superseded-by <id>]`,
+recorded in tasks/ like a close.
+
+### RF-35 [VERIFIED] Re-extracting evidence from a resumed builder's transcript gives false items
+
+After a builder is resumed (to cite its evidence), its transcript also holds the resumed turn: re-running
+evidence.py repeats E1 and flags the builder quoting the evidence file as a new failure. Proposal: extract
+once, before resuming; or have evidence.py stop at the first resume marker / skip tool output that reads
+`*.evidence.md`.
