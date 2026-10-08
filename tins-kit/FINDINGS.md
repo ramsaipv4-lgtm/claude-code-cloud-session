@@ -236,3 +236,12 @@ React in the bundler. Candidate kit change: `kit task new` should report when th
 seen from the worktree differs from the main checkout's (e.g. compare `npm ls --all` hashes), and
 `kit merge` should gate in a temporary worktree prepared the same way as task worktrees (see RF-30),
 so "passes on the branch" and "passes on merge" test the same environment.
+
+### RF-32 [VERIFIED] The evidence extractor never caught hidden-test reads made through the shell
+
+`orchestration/evidence.py` was written through a heredoc that turned `\b` into a literal backspace
+character (0x08). The shell-command branch of the hidden-test check therefore required a backspace
+after `cat`/`grep`/… and never matched; only reads through the Read/Grep/Glob tools were flagged.
+So the v1 audit's hidden-test read counts (AUDIT.md, RF-26) are a **lower bound**. Found by the
+local orchestrator on 2026-10-08; fixed (and `acceptance/games` added to the pattern).
+Lesson: test the auditing tools themselves with a planted positive case before trusting a zero.
