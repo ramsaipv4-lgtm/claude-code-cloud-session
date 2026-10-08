@@ -125,8 +125,10 @@ claude
 ```
 
 1. Open `~/work/claude-code-cloud-session/PROMPTS.md` (in VS Code: `code ~/work/claude-code-cloud-session/PROMPTS.md`).
-2. Copy everything inside the first code block under **§1 Orchestrator prompt** (from
-   `You are the orchestrator…` to `…main and task branches.`) and paste it into Claude Code.
+2. Create `~/work/tins-lms/.claude/settings.local.json` with the allow-list shown at the top of
+   **§0** in PROMPTS.md. Then copy the code block that starts `You are the ORCHESTRATOR` under
+   **§0 Single-window mode** and paste it into Claude Code. (Three-chat alternative: paste §1 here
+   and §2 in a second terminal.)
 3. It reads the files and answers with (a) the 6 rules, (b) the task lifecycle, (c) what it must
    never do, (d) its next three steps. Check it against the checklist at the top of PROMPTS.md
    (SPEC first; kit start/close; scope; no skip; builders don't read hidden tests; one gate at a
@@ -145,7 +147,7 @@ cd ~/work/tins-lms-tests
 claude
 ```
 
-Paste the **§2 Test-writer prompt** block. It replies with the conventions it found and a table
+(Only if you use three chats; with the §0 one-chat prompt the orchestrator starts the test writer itself — skip this step.) Paste the **§2 Test-writer prompt** block. It replies with the conventions it found and a table
 of AC-200 … AC-230 → file → assertions. Check that every row 200–230 is there, then type `go`. When
 it finishes it pushes to tins-lms-tests and lists open questions — answer those, and tell the
 orchestrator (terminal 1): "the games tests are pushed; do Order of work step 2".
