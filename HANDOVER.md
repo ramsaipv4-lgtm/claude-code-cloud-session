@@ -1,7 +1,7 @@
 # Handover — continue on your own machine (2026-10-08)
 
 Everything below is pushed to GitHub. Nothing you need lives only in the cloud container.
-Prompts for the next LLM (orchestrator, test writer, builder): [`PROMPTS.md`](PROMPTS.md).
+Step-by-step setup on WSL: [`SETUP-WSL.md`](SETUP-WSL.md). Prompts for the next LLM: [`PROMPTS.md`](PROMPTS.md).
 
 ## 1. Clone
 
