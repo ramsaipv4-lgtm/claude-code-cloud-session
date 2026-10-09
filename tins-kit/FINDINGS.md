@@ -287,3 +287,11 @@ The gate reads tests through a symlink to `~/work/tins-lms-tests`. Checking out 
 (an easy instruction to give) would silently change what every gate runs. The orchestrator caught it in
 its own brief before it took effect. Rule: branch work on the tests happens only in a separate git
 worktree; the gate's copy stays on main.
+
+### RF-38 [VERIFIED] A builder running in parallel with the task it depends on reaches into that task's worktree
+
+g-2 (engine) ran in parallel with g-1 (Snek interpreter), which it depends on, and was told to use a stub.
+It copied an early snapshot of g-1's code into its own worktree (8 of 10 files later differed from what
+merged) and imported from g-1's worktree path in a scratch script. Lesson: when tasks run in parallel,
+give the dependent task a committed interface stub on main before it starts (or don't parallelize
+dependent tasks); kit could also refuse paths into other worktrees during a session.
