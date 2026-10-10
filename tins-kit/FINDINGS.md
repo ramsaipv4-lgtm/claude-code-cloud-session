@@ -295,3 +295,11 @@ It copied an early snapshot of g-1's code into its own worktree (8 of 10 files l
 merged) and imported from g-1's worktree path in a scratch script. Lesson: when tasks run in parallel,
 give the dependent task a committed interface stub on main before it starts (or don't parallelize
 dependent tasks); kit could also refuse paths into other worktrees during a session.
+
+### RF-39 [VERIFIED] The hidden-test check was a list of folders, so new folders and piped patterns slipped past
+
+A g-3 builder ran `grep 'LMS_\|…' acceptance/lib/*.mjs`. evidence.py missed it twice over: `lib/` was not
+in its folder list, and the `|` inside the grep pattern ended its "same command" match early. It saw only
+environment-variable lines, but the check had to catch it. Fixed: the check now flags anything under
+`acceptance/` except `smoke/`, `fixtures/` and `.artifacts/` (an allow-list instead of a deny-list), and
+matches across the whole command. Lesson: audit rules should allow-list what is permitted.
